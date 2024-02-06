@@ -34,6 +34,7 @@ class ReturnPlay {
 	Message message;
 }
 
+
 public class Chess {
 	
 	enum Player { white, black }
@@ -62,6 +63,29 @@ public class Chess {
 	 */
 	public static void start() {
 		/* FILL IN THIS METHOD */
+		ReturnPlay ply = new ReturnPlay();
+		ply.piecesOnBoard = new ArrayList<ReturnPiece>();
+		ReturnPiece bR1 = new ReturnPiece();
+		bR1.pieceFile = chess.ReturnPiece.PieceFile.a;
+		bR1.pieceRank = 8;
+		bR1.pieceType = chess.ReturnPiece.PieceType.BR;
+		
+		ReturnPiece bR2 = new ReturnPiece();
+		bR2.pieceFile = chess.ReturnPiece.PieceFile.h;
+		bR2.pieceRank = 8;
+		bR2.pieceType = chess.ReturnPiece.PieceType.BR;
+		
+		ply.piecesOnBoard.add(bR1);
+		ply.piecesOnBoard.add(bR2);
+		String[][] temp = PlayChess.makeBlankBoard();
+		PlayChess.printBoard(ply.piecesOnBoard);
+//		
+//		for (int i = 0; i < temp.length; i++) {
+//            for (int j = 0; j < temp[i].length; j++) {
+//                System.out.print(temp[i][j] + " ");
+//            }
+//            System.out.println(); // Move to the next line after printing each row
+//        }
 	}
 }
 

@@ -9,7 +9,7 @@ public class PlayChess {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
 		Chess.start();
-		
+		System.out.println("Enter a move: ");
 		String line = sc.nextLine();
 		while (!line.equals("quit")) {
 			if (line.equals("reset")) {
