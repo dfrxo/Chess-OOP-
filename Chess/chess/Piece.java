@@ -14,3 +14,4 @@ public interface Piece {
 		return null;
 	}
 }
+
