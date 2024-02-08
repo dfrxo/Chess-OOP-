@@ -50,6 +50,10 @@ public class Chess {
 	 */
 	public static ReturnPlay play(String move) {
 
+		
+		// h2 h3
+		
+		
 		/* FILL IN THIS METHOD */
 		
 		/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
@@ -189,6 +193,10 @@ public class Chess {
 		ply.piecesOnBoard.add(wQ);
 		ply.piecesOnBoard.add(wK);
 		PlayChess.printBoard(ply.piecesOnBoard);
+		
+		
+		
+		
 
 	}
 }
