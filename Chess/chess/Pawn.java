@@ -9,17 +9,14 @@ public class Pawn extends Piecee{
 	public Pawn(ReturnPiece pce, ReturnPlay board) {
 		super(pce, board);
 	}
-
-	@Override
 	boolean checkCheck() {
-		// TODO Auto-generated method stub
 		return false;
 	}
-
-	@Override
 	void move() {
-		// TODO Auto-generated method stub
 		
+	}
+	public String toString() {
+		return file + String.valueOf(row);
 	}
 
 }
