@@ -51,13 +51,54 @@ public class Chess {
 	public static ReturnPlay play(String move) {
 
 		
+			
 		// h2 h3
+		// convert 'h' to PieceFile h (done)
+		String sf1 = String.valueOf(move.charAt(0));
+		String sr1 = String.valueOf(move.charAt(1));
+		String sf2 = String.valueOf(move.charAt(3));
+		String sr2 = String.valueOf(move.charAt(4));
+
+		chess.ReturnPiece.PieceFile initFile = chess.ReturnPiece.PieceFile.valueOf(sf1);
+		int initRank = Integer.parseInt(sr1);
+		chess.ReturnPiece.PieceFile finalFile = chess.ReturnPiece.PieceFile.valueOf(sf2);
+		int finalRank = Integer.parseInt(sr2);
 		
+		// After getting initial file and rank, piecesOnBoard[] to find which piece is at that address. 
+		// Call the piece and return the outcome of that play by updating the board.
+		
+		ReturnPiece thePiece; // from the piecesOnBoard[]
+		
+		for (int i = 0; i < piecesOnBoard.size(); i++)
+		{
+			ReturnPiece pc = piecesOnBoard.get(i);
+			if (pc.pieceFile.toString().equals(sf1) && pc.pieceRank == initRank)
+			{
+				thePiece = pc;
+				break; 
+			}
+		}
+		
+		
+		
+		if(thePiece.pieceType.compareTo(chess.ReturnPiece.PieceType.WP) == 0 || thePiece.pieceType.compareTo(chess.ReturnPiece.PieceType.BP) == 0)
+		{
+			chess.Pawn moveThePiece = new chess.Pawn(thePiece, piecesOnBoard , finalFile, finalRank);
+		}
+		
+//		if(thePiece.pieceType.compareTo(chess.ReturnPiece.PieceType.WR) == 0 || thePiece.pieceType.compareTo(chess.ReturnPiece.PieceType.BR) == 0)
+//		{
+//			chess.Rook moveThePiece = new chess.Rook(thePiece, updated_board_message, finalFile, finalRank);
+//			
+//		}
 		
 		/* FILL IN THIS METHOD */
 		
 		/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
-		/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
+		/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT 
+		 * */
+		
+		//return moveThePiece.move();
 		return null;
 	}
 	
