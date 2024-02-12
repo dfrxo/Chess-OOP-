@@ -11,11 +11,24 @@ public class Pawn implements Piecee{
 	int finalRank;
 	chess.ReturnPlay.Message m = null;
 	
+<<<<<<< HEAD
 	public Pawn(ReturnPiece pce, ArrayList<ReturnPiece> board, chess.ReturnPiece.PieceFile finalFile, int finalRank) 
 	{
 		this.pce = pce;
 		this.board = board;
+=======
+	public Pawn(ReturnPiece pce, ReturnPlay board) {
+		super(pce, board);
+	}
+	boolean checkCheck() {
+		return false;
+	}
+	void move() {
+>>>>>>> a7b55587edb57558406b0b753ef12f0987b2ef1e
 		
+	}
+	public String toString() {
+		return file + String.valueOf(row);
 	}
 
 	
