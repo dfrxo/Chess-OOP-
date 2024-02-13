@@ -2,7 +2,7 @@ package chess;
 
 import java.util.ArrayList;
 
-public class Pawn implements Piecee{
+public class Pawn extends ReturnPiece{
 	ReturnPiece pce;
 	chess.ReturnPiece.PieceFile file;
 	int row;
@@ -17,9 +17,9 @@ public class Pawn implements Piecee{
 		this.board = board;
 	}
 	public Pawn(ReturnPiece pce, ReturnPlay board) {
-		super(pce, board);
+		//super(pce, board);
 	}
-	boolean checkCheck() {
+	public boolean checkCheck() {
 		return false;
 	}
 	void move() {
