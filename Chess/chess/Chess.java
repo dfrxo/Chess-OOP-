@@ -38,6 +38,7 @@ class ReturnPlay {
 public class Chess {
 	
 	enum Player { white, black }
+	static ArrayList<ReturnPiece> piecesOnBoard;
 	
 	/**
 	 * Plays the next move for whichever player has the turn.
@@ -49,10 +50,6 @@ public class Chess {
 	 *         the contents of the returned ReturnPlay instance.
 	 */
 	public static ReturnPlay play(String move) {
-<<<<<<< HEAD
-
-		
-			
 		// h2 h3
 		// convert 'h' to PieceFile h (done)
 		String sf1 = String.valueOf(move.charAt(0));
@@ -70,7 +67,7 @@ public class Chess {
 		
 		ReturnPiece thePiece; // from the piecesOnBoard[]
 		
-		for (int i = 0; i < piecesOnBoard.size(); i++)
+		for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
 		{
 			ReturnPiece pc = piecesOnBoard.get(i);
 			if (pc.pieceFile.toString().equals(sf1) && pc.pieceRank == initRank)
@@ -92,11 +89,9 @@ public class Chess {
 //			chess.Rook moveThePiece = new chess.Rook(thePiece, updated_board_message, finalFile, finalRank);
 //			
 //		}
-=======
 		// h2 h3
 		ReturnPlay move1 = new ReturnPlay();
 		//move1.piecesOnBoard.get
->>>>>>> a7b55587edb57558406b0b753ef12f0987b2ef1e
 		
 		/* FILL IN THIS METHOD */
 		
