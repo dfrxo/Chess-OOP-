@@ -95,6 +95,7 @@ public class Chess {
 			//thePiece = (Pawn)thePiece; // choose between these two lines
 			msg = ((Pawn) thePiece).move(sf2,finalRank);  //    --------------------
 		}
+		//
 		// Code to execute if thePiece is an instance of Pawn
 //		} else if (thePiece instanceof Knight) {
 //		    // Code to execute if thePiece is an instance of Knight
