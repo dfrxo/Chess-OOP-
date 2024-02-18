@@ -62,8 +62,8 @@ public class Chess {
 		// After getting initial file and rank, piecesOnBoard[] to find which piece is at that address. 
 		// Call the piece and return the outcome of that play by updating the board.
 		
-		ReturnPiece thePiece = new ReturnPiece();; // thePiece = the piece we're moving 
-		
+		ReturnPiece thePiece=null; // thePiece = the piece we're moving 
+		ReturnPiece newSpot = new ReturnPiece();
 		
 		// Searches for the piece we're moving
 		for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
@@ -84,10 +84,12 @@ public class Chess {
 			if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == finalRank)
 			{
 				emptySpace=false;
-				thePiece = pc;
+				newSpot = pc;
 				break; 
 			}
 		}
+		
+		
 		if(emptySpace) {
 			thePiece.pieceRank = finalRank;
 			thePiece.pieceFile = finalFile;
@@ -100,15 +102,11 @@ public class Chess {
 		
 		if(thePiece.pieceType.compareTo(chess.ReturnPiece.PieceType.WP) == 0 || thePiece.pieceType.compareTo(chess.ReturnPiece.PieceType.BP) == 0)
 		{
-			chess.Pawn moveThePiece = new chess.Pawn(thePiece, piecesOnBoard , finalFile, finalRank);
+			//chess.Pawn moveThePiece = new chess.Pawn(thePiece, piecesOnBoard , finalFile, finalRank);
 			//System.out.println(moveThePiece);
 		}
 		
-//		if(thePiece.pieceType.compareTo(chess.ReturnPiece.PieceType.WR) == 0 || thePiece.pieceType.compareTo(chess.ReturnPiece.PieceType.BR) == 0)
-//		{
-//			chess.Rook moveThePiece = new chess.Rook(thePiece, updated_board_message, finalFile, finalRank);
-//			
-//		}
+
 		// h2 h3
 		ReturnPlay msg = new ReturnPlay();
 		msg.piecesOnBoard = Chess.piecesOnBoard;
@@ -256,7 +254,7 @@ public class Chess {
 		wp7.pieceType = chess.ReturnPiece.PieceType.WP;
 		Chess.piecesOnBoard.add(wp7);
 
-		ReturnPiece wp8 = new ReturnPiece();
+		Pawn wp8 = new Pawn();
 		wp8.pieceFile = chess.ReturnPiece.PieceFile.h;
 		wp8.pieceRank = 2;
 		wp8.pieceType = chess.ReturnPiece.PieceType.WP;
@@ -289,7 +287,7 @@ public class Chess {
 		Chess.piecesOnBoard.add(wp8);
 		PlayChess.printBoard(Chess.piecesOnBoard);
 		
-		ReturnPiece p1 = new Pawn(wp1,Chess.piecesOnBoard, null, 0);
+		//ReturnPiece p1 = new Pawn(wp1,Chess.piecesOnBoard, null, 0);
 	}
 	
 	public static void updateBoard() {

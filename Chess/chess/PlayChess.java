@@ -10,8 +10,8 @@ public class PlayChess {
 		Scanner sc = new Scanner(System.in);
 		Chess.start();
 		System.out.println("Enter a move: ");
-		//String line = sc.nextLine();
-		String line = "a2 a3";
+		String line = sc.nextLine();
+		//String line = "a2 a3";
 		while (!line.equals("quit")) {
 			if (line.equals("reset")) {
 				Chess.start();
