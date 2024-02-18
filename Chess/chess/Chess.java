@@ -49,21 +49,21 @@ public class Chess {
 	public static ReturnPlay play(String move) {
 		// h2 h3
 		// convert 'h' to PieceFile h (done)
-		String sf1 = String.valueOf(move.charAt(0));
-		String sr1 = String.valueOf(move.charAt(1));
-		String sf2 = String.valueOf(move.charAt(3));
-		String sr2 = String.valueOf(move.charAt(4));
+		String sf1 = String.valueOf(move.charAt(0));  // h
+		String sr1 = String.valueOf(move.charAt(1));  // 2
+		String sf2 = String.valueOf(move.charAt(3));  // h 
+		String sr2 = String.valueOf(move.charAt(4));  // 3
 
-		chess.ReturnPiece.PieceFile initFile = chess.ReturnPiece.PieceFile.valueOf(sf1);
-		int initRank = Integer.parseInt(sr1);
-		chess.ReturnPiece.PieceFile finalFile = chess.ReturnPiece.PieceFile.valueOf(sf2);
-		int finalRank = Integer.parseInt(sr2);
+		chess.ReturnPiece.PieceFile initFile = chess.ReturnPiece.PieceFile.valueOf(sf1); // enum.h
+		int initRank = Integer.parseInt(sr1);											 // 2
+		chess.ReturnPiece.PieceFile finalFile = chess.ReturnPiece.PieceFile.valueOf(sf2);// enum.h
+		int finalRank = Integer.parseInt(sr2);											 // 3
 		
 		// After getting initial file and rank, piecesOnBoard[] to find which piece is at that address. 
 		// Call the piece and return the outcome of that play by updating the board.
 		
 		ReturnPiece thePiece=null; // thePiece = the piece we're moving 
-		ReturnPiece newSpot = new ReturnPiece();
+		ReturnPiece newSpot = null;
 		
 		// Searches for the piece we're moving
 		for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
@@ -77,30 +77,50 @@ public class Chess {
 		}
 		
 		// Searches for where we're moving it to    -  We need to put this in each piece class
-		boolean emptySpace = true;        // If we don't find a piece, this is true. The piece can move there if within the rules.
+
+		
+//		boolean emptySpace = true;        // If we don't find a piece, this is true. The piece can move there if within the rules.
 		for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
 		{
 			ReturnPiece pc = piecesOnBoard.get(i);
 			if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == finalRank)
 			{
-				emptySpace=false;
+//				emptySpace=false;
 				newSpot = pc;
 				break; 
 			}
 		}
-		
-		
-		if(emptySpace) {
-			thePiece.pieceRank = finalRank;
-			thePiece.pieceFile = finalFile;
+		ReturnPlay msg = new ReturnPlay();
+		if (thePiece instanceof Pawn) {
+			//thePiece = (Pawn)thePiece; // choose between these two lines
+			msg = ((Pawn) thePiece).move(sf2,finalRank);  //    --------------------
 		}
-		else {
-			// we eat the whatever piece is in there
-		}
+		// Code to execute if thePiece is an instance of Pawn
+//		} else if (thePiece instanceof Knight) {
+//		    // Code to execute if thePiece is an instance of Knight
+//		} else if (thePiece instanceof Bishop) {
+//		    // Code to execute if thePiece is an instance of Bishop
+//		} else if (thePiece instanceof Rook) {
+//		    // Code to execute if thePiece is an instance of Rook
+//		} else if (thePiece instanceof Queen) {
+//		    // Code to execute if thePiece is an instance of Queen
+//		} else if (thePiece instanceof King) {
+//		    // Code to execute if thePiece is an instance of King
+//		} else {
+		// Code to execute if thePiece does not match any of the above
+//		}
+		
+//		if(emptySpace) {
+//			thePiece.pieceRank = finalRank;
+//			thePiece.pieceFile = finalFile;
+//		}
+//		else {
+//			// we eat the whatever piece is in there
+//		}
 		
 		
 		
-		if(thePiece.pieceType.compareTo(chess.ReturnPiece.PieceType.WP) == 0 || thePiece.pieceType.compareTo(chess.ReturnPiece.PieceType.BP) == 0)
+	//	if(thePiece.pieceType.compareTo(chess.ReturnPiece.PieceType.WP) == 0 || thePiece.pieceType.compareTo(chess.ReturnPiece.PieceType.BP) == 0)
 		{
 			//chess.Pawn moveThePiece = new chess.Pawn(thePiece, piecesOnBoard , finalFile, finalRank);
 			//System.out.println(moveThePiece);
@@ -108,8 +128,7 @@ public class Chess {
 		
 
 		// h2 h3
-		ReturnPlay msg = new ReturnPlay();
-		msg.piecesOnBoard = Chess.piecesOnBoard;
+		//msg.piecesOnBoard = Chess.piecesOnBoard;
 		
 		return msg;
 	}
@@ -289,8 +308,5 @@ public class Chess {
 		
 		//ReturnPiece p1 = new Pawn(wp1,Chess.piecesOnBoard, null, 0);
 	}
-	
-	public static void updateBoard() {
-		
-	}
+
 }

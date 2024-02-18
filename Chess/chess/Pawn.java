@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
+import chess.ReturnPlay.Message;
 
 public class Pawn extends ReturnPiece{
 	// Inherited fields :: 
@@ -13,32 +14,17 @@ public class Pawn extends ReturnPiece{
 //	PieceType pieceType;
 //	PieceFile pieceFile;
 //	int pieceRank;  // 1..8
-	
-	
-	
-	
-//	ReturnPiece pce;
-//	chess.ReturnPiece.PieceFile file;
-//	int row;
 	ArrayList<ReturnPiece> board = (ArrayList<ReturnPiece>)Chess.piecesOnBoard.clone();
-//	String finalFile;
 	int finalRank;
-//	chess.ReturnPlay.Message m = null;
 	
 //	public Pawn(ReturnPiece pce, ArrayList<ReturnPiece> board, chess.ReturnPiece.PieceFile finalFile, int finalRank) 
 //	{
 //		this.pce = pce;
 //		this.board = board;
 //	}
-//	public Pawn(ReturnPiece pce, ReturnPlay board) {
-//		//super(pce, board);
-//	}
+
 	public boolean checkCheck() {
 		return false;
-	}
-	void move() {
-
-		
 	}
 	public String toString() {
 		return pieceFile + String.valueOf(pieceRank);
@@ -52,10 +38,54 @@ public class Pawn extends ReturnPiece{
 	/**
 	 * @return ReturnPlay object. message is null if validMove() == True. Updates board.
 	 */
-	public ReturnPlay move(ReturnPiece n) {
+	public ReturnPlay move(String file, int rank) {
+		System.out.println();
+		ReturnPiece newSpot = findNewSpot(file,rank);   // Finds the new spot
+		chess.ReturnPlay updated_board_message = new chess.ReturnPlay();
+		String st = String.valueOf(this.pieceType);
+		char color = st.charAt(0);
 		
-		System.out.println("this works");
-		return null;
+		if(newSpot==null) {
+			// it's an empty spot
+		}
+		else {
+			// there's something in that spot so we eat it
+		}
+		
+
+		// If white is on starting position and it moves 2 spots up, it's valid.
+		if(color=='W' && pieceRank==2  && rank-this.pieceRank==2) { 
+			this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
+			this.pieceRank = rank;
+			updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+			
+		}
+		// If white 
+		else if(color=='W' && rank-this.pieceRank==1) {
+			this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
+			this.pieceRank = rank;
+			updated_board_message.piecesOnBoard = Chess.piecesOnBoard;			
+		}
+		else {
+			updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+			updated_board_message.message = Message.ILLEGAL_MOVE;
+		}
+		return updated_board_message;
+	}
+	public ReturnPiece findNewSpot(String sf2, int pieceRank) {
+		ReturnPiece newSpot=null;
+		for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
+		{
+			ReturnPiece pc = Chess.piecesOnBoard.get(i);
+			if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == finalRank)
+			{
+//				emptySpace=false;
+				newSpot = pc;
+				break; 
+			}
+		}
+		return newSpot;
+		
 	}
 //	public ReturnPlay move(ArrayList<ReturnPiece> board, chess.ReturnPiece.PieceFile finalFile, int finalRank) {
 //		// TODO Auto-generated method stub
