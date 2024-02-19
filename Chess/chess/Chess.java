@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 class ReturnPiece {
 	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
@@ -39,6 +40,9 @@ public class Chess {
 	
 	enum Player { white, black }
 	static ArrayList<ReturnPiece> piecesOnBoard = new ArrayList<>();
+	static Player current;
+
+	
 	/**
 	 * @param move String for next move, e.g. "a2 a3"
 	 * 
@@ -76,24 +80,41 @@ public class Chess {
 			}
 		}
 		
-		// Searches for where we're moving it to    -  We need to put this in each piece class
-
-		
-//		boolean emptySpace = true;        // If we don't find a piece, this is true. The piece can move there if within the rules.
+		// Searches for where we're moving it to    -  We need to put this in each piece class	
 		for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
 		{
 			ReturnPiece pc = piecesOnBoard.get(i);
 			if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == finalRank)
 			{
-//				emptySpace=false;
 				newSpot = pc;
 				break; 
 			}
 		}
 		ReturnPlay msg = new ReturnPlay();
 		if (thePiece instanceof Pawn) {
-			//thePiece = (Pawn)thePiece; // choose between these two lines
 			msg = ((Pawn) thePiece).move(sf2,finalRank);  //    --------------------
+		}
+		else {  // THIS ELSE STATEMENT IS FOR TESTING THE EAT THE PIECE MOVE
+				////////////////////////////////////////////////////////////
+				////////////////////////////////////////////////////////////
+			boolean emptySpace = true;        
+			for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
+			{
+				ReturnPiece pc = piecesOnBoard.get(i);
+				if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == finalRank)
+				{
+					emptySpace=false;
+					newSpot = pc;
+					break; 
+				}
+			}
+			
+			
+			if(emptySpace) {
+				thePiece.pieceRank = finalRank;
+				thePiece.pieceFile = finalFile;
+			}
+			msg.piecesOnBoard = Chess.piecesOnBoard;
 		}
 		//
 		// Code to execute if thePiece is an instance of Pawn
@@ -119,21 +140,13 @@ public class Chess {
 //			// we eat the whatever piece is in there
 //		}
 		
-		
-		
-	//	if(thePiece.pieceType.compareTo(chess.ReturnPiece.PieceType.WP) == 0 || thePiece.pieceType.compareTo(chess.ReturnPiece.PieceType.BP) == 0)
-		{
-			//chess.Pawn moveThePiece = new chess.Pawn(thePiece, piecesOnBoard , finalFile, finalRank);
-			//System.out.println(moveThePiece);
-		}
-		
-
-		// h2 h3
-		//msg.piecesOnBoard = Chess.piecesOnBoard;
-		
 		return msg;
 	}
-	
+	public static boolean checkChecker() {
+		
+		
+		return false;
+	}
 	public static void start() {		
 		// Initialize black rooks
 		ReturnPiece bR1 = new ReturnPiece();
@@ -305,6 +318,9 @@ public class Chess {
 		Chess.piecesOnBoard.add(wp6);
 		Chess.piecesOnBoard.add(wp7);
 		Chess.piecesOnBoard.add(wp8);
+		
+		Chess.current = Player.white;
+		
 		PlayChess.printBoard(Chess.piecesOnBoard);
 		
 		//ReturnPiece p1 = new Pawn(wp1,Chess.piecesOnBoard, null, 0);
