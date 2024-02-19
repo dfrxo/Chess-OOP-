@@ -14,6 +14,8 @@ class ReturnPiece {
 	public String toString() {
 		return ""+pieceFile+pieceRank+":"+pieceType;
 	}
+	
+	
 	public boolean equals(Object other) {
 		if (other == null || !(other instanceof ReturnPiece)) {
 			return false;
