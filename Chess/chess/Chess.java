@@ -44,6 +44,8 @@ public class Chess {
 	enum Player { white, black }
 	static ArrayList<ReturnPiece> piecesOnBoard = new ArrayList<>();
 	static Player current;
+	
+	static ReturnPiece enpassantPossible=null;
 
 	
 	/**
@@ -71,7 +73,8 @@ public class Chess {
 		
 		ReturnPiece thePiece=null; // thePiece = the piece we're moving 
 		ReturnPiece newSpot = null;
-		
+		ReturnPlay msg = new ReturnPlay();
+
 		// Searches for the piece we're moving
 		for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
 		{
@@ -83,6 +86,14 @@ public class Chess {
 			}
 		}
 		
+		if(thePiece==null) {
+			msg.piecesOnBoard = Chess.piecesOnBoard;
+			msg.message = ReturnPlay.Message.ILLEGAL_MOVE;
+			System.err.println("You chose an empty spot as a piece to move.");
+			return msg;
+		}
+		
+		
 		// Searches for where we're moving it to    -  We need to put this in each piece class	
 		for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
 		{
@@ -93,32 +104,31 @@ public class Chess {
 				break; 
 			}
 		}
-		ReturnPlay msg = new ReturnPlay();
 		if (thePiece instanceof Pawn) {
 			msg = ((Pawn) thePiece).move(sf2,finalRank);  //    --------------------
 		}
-//		else {  // THIS ELSE STATEMENT IS FOR TESTING THE EAT THE PIECE MOVE
-//				////////////////////////////////////////////////////////////
-//				////////////////////////////////////////////////////////////
-//			boolean emptySpace = true;        
-//			for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
-//			{
-//				ReturnPiece pc = piecesOnBoard.get(i);
-//				if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == finalRank)
-//				{
-//					emptySpace=false;
-//					newSpot = pc;
-//					break; 
-//				}
-//			}
-//			
-//			
-//			if(emptySpace) {
-//				thePiece.pieceRank = finalRank;
-//				thePiece.pieceFile = finalFile;
-//			}
-//			msg.piecesOnBoard = Chess.piecesOnBoard;
-//		}
+		else {  // THIS ELSE STATEMENT IS FOR TESTING THE EAT THE PIECE MOVE
+				////////////////////////////////////////////////////////////
+				////////////////////////////////////////////////////////////
+			boolean emptySpace = true;        
+			for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
+			{
+				ReturnPiece pc = piecesOnBoard.get(i);
+				if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == finalRank)
+				{
+					emptySpace=false;
+					newSpot = pc;
+					break; 
+				}
+			}
+			
+			
+			if(emptySpace) {
+				thePiece.pieceRank = finalRank;
+				thePiece.pieceFile = finalFile;
+			}
+			msg.piecesOnBoard = Chess.piecesOnBoard;
+		}
 
 		
 		
@@ -152,6 +162,14 @@ public class Chess {
 		
 		
 		return false;
+	}
+	public static void changePlayer() {
+		if(current == Player.white){
+			current = Player.black;
+		}
+		else {
+			current = Player.white;
+		}
 	}
 	public static void start() {		
 		// Initialize black rooks
@@ -206,54 +224,54 @@ public class Chess {
 //		    Chess.piecesOnBoard.add(bP);
 //		}
 		// Initialize black pawns
-				ReturnPiece bp1 = new ReturnPiece();
+				ReturnPiece bp1 = new Pawn();
 				bp1.pieceFile = chess.ReturnPiece.PieceFile.a;
-				bp1.pieceRank = 7;
+				bp1.pieceRank = 4;
 				bp1.pieceType = chess.ReturnPiece.PieceType.BP;
 				Chess.piecesOnBoard.add(bp1);
 
-				ReturnPiece bp2 = new ReturnPiece();
+				ReturnPiece bp2 = new Pawn();
 				bp2.pieceFile = chess.ReturnPiece.PieceFile.b;
 				bp2.pieceRank = 7;
 				bp2.pieceType = chess.ReturnPiece.PieceType.BP;
 				Chess.piecesOnBoard.add(bp2);
 
-				ReturnPiece bp3 = new ReturnPiece();
+				ReturnPiece bp3 = new Pawn();
 				bp3.pieceFile = chess.ReturnPiece.PieceFile.c;
 				bp3.pieceRank = 7;
 				bp3.pieceType = chess.ReturnPiece.PieceType.BP;
 				Chess.piecesOnBoard.add(bp3);
 
-				ReturnPiece bp4 = new ReturnPiece();
+				ReturnPiece bp4 = new Pawn();
 				bp4.pieceFile = chess.ReturnPiece.PieceFile.d;
 				bp4.pieceRank = 7;
 				bp4.pieceType = chess.ReturnPiece.PieceType.BP;
 				Chess.piecesOnBoard.add(bp4);
 
-				ReturnPiece bp5 = new ReturnPiece();
+				ReturnPiece bp5 = new Pawn();
 				bp5.pieceFile = chess.ReturnPiece.PieceFile.e;
 				bp5.pieceRank = 7;
 				bp5.pieceType = chess.ReturnPiece.PieceType.BP;
 				Chess.piecesOnBoard.add(bp5);
 
-				ReturnPiece bp6 = new ReturnPiece();
+				ReturnPiece bp6 = new Pawn();
 				bp6.pieceFile = chess.ReturnPiece.PieceFile.f;
 				bp6.pieceRank = 7;
 				bp6.pieceType = chess.ReturnPiece.PieceType.BP;
 				Chess.piecesOnBoard.add(bp6);
 
-//				ReturnPiece bp7 = new ReturnPiece();
-//				bp7.pieceFile = chess.ReturnPiece.PieceFile.g;
-//				bp7.pieceRank = 7;
-//				bp7.pieceType = chess.ReturnPiece.PieceType.BP;
-//				Chess.piecesOnBoard.add(bp7);
-				ReturnPiece bp7 = new ReturnPiece();
+				ReturnPiece bp7 = new Pawn();
 				bp7.pieceFile = chess.ReturnPiece.PieceFile.g;
-				bp7.pieceRank = 5;
+				bp7.pieceRank = 7;
 				bp7.pieceType = chess.ReturnPiece.PieceType.BP;
 				Chess.piecesOnBoard.add(bp7);
+//				ReturnPiece bp7 = new ReturnPiece();
+//				bp7.pieceFile = chess.ReturnPiece.PieceFile.g;
+//				bp7.pieceRank = 5;
+//				bp7.pieceType = chess.ReturnPiece.PieceType.BP;
+//				Chess.piecesOnBoard.add(bp7);
 
-				ReturnPiece bp8 = new ReturnPiece();
+				ReturnPiece bp8 = new Pawn();
 				bp8.pieceFile = chess.ReturnPiece.PieceFile.h;
 				bp8.pieceRank = 7;
 				bp8.pieceType = chess.ReturnPiece.PieceType.BP;
@@ -304,45 +322,46 @@ public class Chess {
 		wK.pieceType = chess.ReturnPiece.PieceType.WK;
 
 		// Initialize black pawns
-		ReturnPiece wp1 = new ReturnPiece();
+		ReturnPiece wp1 = new Pawn();
 		wp1.pieceFile = chess.ReturnPiece.PieceFile.a;
 		wp1.pieceRank = 2;
 		wp1.pieceType = chess.ReturnPiece.PieceType.WP;
 		Chess.piecesOnBoard.add(wp1);
 
-		ReturnPiece wp2 = new ReturnPiece();
+		ReturnPiece wp2 = new Pawn();
 		wp2.pieceFile = chess.ReturnPiece.PieceFile.b;
 		wp2.pieceRank = 2;
 		wp2.pieceType = chess.ReturnPiece.PieceType.WP;
 		Chess.piecesOnBoard.add(wp2);
 
-		ReturnPiece wp3 = new ReturnPiece();
+		ReturnPiece wp3 = new Pawn();
 		wp3.pieceFile = chess.ReturnPiece.PieceFile.c;
 		wp3.pieceRank = 2;
 		wp3.pieceType = chess.ReturnPiece.PieceType.WP;
 		Chess.piecesOnBoard.add(wp3);
 
-		ReturnPiece wp4 = new ReturnPiece();
+		ReturnPiece wp4 = new Pawn();
 		wp4.pieceFile = chess.ReturnPiece.PieceFile.d;
 		wp4.pieceRank = 2;
 		wp4.pieceType = chess.ReturnPiece.PieceType.WP;
 		Chess.piecesOnBoard.add(wp4);
 
-		ReturnPiece wp5 = new ReturnPiece();
+		ReturnPiece wp5 = new Pawn();
 		wp5.pieceFile = chess.ReturnPiece.PieceFile.e;
 		wp5.pieceRank = 2;
 		wp5.pieceType = chess.ReturnPiece.PieceType.WP;
 		Chess.piecesOnBoard.add(wp5);
 
-		ReturnPiece wp6 = new ReturnPiece();
+		ReturnPiece wp6 = new Pawn();
 		wp6.pieceFile = chess.ReturnPiece.PieceFile.f;
 		wp6.pieceRank = 2;
 		wp6.pieceType = chess.ReturnPiece.PieceType.WP;
 		Chess.piecesOnBoard.add(wp6);
 
-		ReturnPiece wp7 = new ReturnPiece();
+		ReturnPiece wp7 = new Pawn();
 		wp7.pieceFile = chess.ReturnPiece.PieceFile.g;
-		wp7.pieceRank = 2;
+//		wp7.pieceRank = 2;
+		wp7.pieceRank = 5;
 		wp7.pieceType = chess.ReturnPiece.PieceType.WP;
 		Chess.piecesOnBoard.add(wp7);
 

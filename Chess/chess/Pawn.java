@@ -16,7 +16,6 @@ public class Pawn extends ReturnPiece implements Piece{
 //	PieceFile pieceFile;
 //	int pieceRank;  // 1..8
 	//ArrayList<ReturnPiece> board = (ArrayList<ReturnPiece>)Chess.piecesOnBoard.clone();
-	int finalRank;
 
 	public boolean checkCheck() {
 		return false;
@@ -45,69 +44,86 @@ public class Pawn extends ReturnPiece implements Piece{
 		String st = String.valueOf(this.pieceType); // CURRENT PIECE
 		char color = st.charAt(0); 					// Color of current piece
 		
-		
-		
-		ReturnPiece p = null;
-		for(ReturnPiece i: Chess.piecesOnBoard) {
-			if(i.equals((ReturnPiece)this)) {
-				p = i;
-			}
-		}
-		
-		
-		
-		
 		if(Chess.current == Player.white) { // White piece.   // Chess.current is the current player's turn
 			if(newSpot==null) {
 				// it's an empty spot
-				if(color=='W' && pieceRank==2  && rank-this.pieceRank==2) { 
+				if(color=='W' && pieceRank==2  && rank-this.pieceRank==2 && this.pieceFile.toString().equals(file)) { 
 					this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
 					this.pieceRank = rank;
+					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 					
-					// this code may be necessary to update the TypePiece on the board.
-					// this.pieceFile is not working
-					p.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
-					p.pieceRank = rank;
-
-					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;					
+					Chess.enpassantPossible = this;
+					
 				}
 				// If white 
-				else if(color=='W' && rank-this.pieceRank==1) {
+				else if(color=='W' && rank-this.pieceRank==1 && this.pieceFile.toString().equals(file)) {
 					this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
-					this.pieceRank = rank;
-					
-					// this code may be necessary to update the TypePiece on the board.
-					// this.pieceFile is not working
-					p.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
-					p.pieceRank = rank;
-					
-					
-					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;			
+					this.pieceRank = rank;					
+					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;	
+					Chess.enpassantPossible = null;
+
+				}
+				else if(color=='W' && Chess.enpassantPossible!=null && rank-this.pieceRank==1) {
+					updated_board_message = enpassant(newSpot,fileNumber, rank);
+					Chess.enpassantPossible = null;					
 				}
 				else {
 					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 					updated_board_message.message = Message.ILLEGAL_MOVE;
 				}
 			}
+			else if(newSpot.pieceType.toString().toLowerCase().charAt(0) == Chess.current.toString().charAt(0)) {   // Checks if eating own piece
+				System.err.println("You tried to eat your own color piece.");
+				updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+				updated_board_message.message = Message.ILLEGAL_MOVE;
+			}
 			else {
 				// there's something in that spot so we eat it
 				updated_board_message = eatThePiece(newSpot, fileNumber);
 				}
 		}
+		
+		
 		else {  // Black piece
-			
+			if(newSpot==null) {
+				// it's an empty spot
+				if(color=='B' && pieceRank==7  && this.pieceRank-rank==2 && this.pieceFile.toString().equals(file)) { 
+					this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
+					this.pieceRank = rank;
+					Chess.enpassantPossible = this;
+					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;					
+				}
+				else if(color=='B' && this.pieceRank-rank==1 && this.pieceFile.toString().equals(file)) {
+					this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
+					this.pieceRank = rank;
+					Chess.enpassantPossible = null;
+					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+				}
+				else if(color=='B' && Chess.enpassantPossible!=null && Math.abs(rank-this.pieceRank)==1) {
+					updated_board_message = enpassant(newSpot,fileNumber, rank);
+					Chess.enpassantPossible = null;		
+				}
+				else {
+					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+					updated_board_message.message = Message.ILLEGAL_MOVE;
+				}
+			}
+			else if(newSpot.pieceType.toString().toLowerCase().charAt(0) == Chess.current.toString().charAt(0)) {   // Checks if eating own piece
+				System.err.println("You tried to eat your own color piece.");
+				updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+				updated_board_message.message = Message.ILLEGAL_MOVE;
+			}
+			else {
+				// there's something in that spot so we eat it
+				updated_board_message = eatThePiece(newSpot, fileNumber);
+				}
 		}
 		
 		
-		
-		
-		
-		
-		
-
-		// If white is on starting position and it moves 2 spots up, it's valid.
-		
-		
+		// Move to the next turn, change the current player to white or black. 
+		if(updated_board_message.message==null) {
+			Chess.changePlayer();
+		}
 		return updated_board_message;
 	}
 	public ReturnPiece findNewSpot(String sf2, int pieceRank) {
@@ -139,14 +155,22 @@ public class Pawn extends ReturnPiece implements Piece{
 		String st = this.pieceFile.toString();
 		int currFile = st.charAt(0);
 		int newRank = newSpot.pieceRank;
+		
+		
 		// currFile = 104; -- "h" ascii value. we're at h4
 		// currRank = 4; -- we're at h4 
 		
 		// newFile = 103 ("g) -- where we're moving
 		// newRank = 5;  -- g5 where we're moving
 		
-		if(Math.abs(newRank-currRank)==1 && Math.abs(currFile-newFile)==1) { 
+		// white can only go +1
+		// black can only go -1
+		
+		if((newRank-currRank==1 && Math.abs(currFile-newFile)==1 && Chess.current == Player.white)
+				|| 
+				(newRank-currRank==-1 && Math.abs(currFile-newFile)==1 && Chess.current == Player.black)) {
 			String stt = String.valueOf((char)newFile);
+			Chess.piecesOnBoard.remove(newSpot);
 			Chess.piecesOnBoard.remove(newSpot);
 			this.pieceRank = newRank;
 			this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(stt);
@@ -157,6 +181,30 @@ public class Pawn extends ReturnPiece implements Piece{
 		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 		
 				
+		return updated_board_message;
+	}
+	public ReturnPlay enpassant(ReturnPiece newSpot, int newFile, int newRank) {
+		// Must check left and right of "this"
+		//
+		chess.ReturnPlay updated_board_message = new chess.ReturnPlay();
+		int currRank = this.pieceRank;    // a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
+		String st = this.pieceFile.toString();
+		int currFile = st.charAt(0);
+		
+		
+		if(Math.abs(newRank-currRank)==1 && Math.abs(currFile-newFile)==1) {
+			String stt = String.valueOf((char)newFile);
+			Chess.piecesOnBoard.remove(Chess.enpassantPossible);
+			Chess.piecesOnBoard.remove(Chess.enpassantPossible);
+
+			this.pieceRank = newRank;
+			this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(stt);
+		}
+		else {
+			updated_board_message.message = Message.ILLEGAL_MOVE;
+		}
+		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+
 		return updated_board_message;
 	}
 //	public ReturnPlay move(ArrayList<ReturnPiece> board, chess.ReturnPiece.PieceFile finalFile, int finalRank) {
