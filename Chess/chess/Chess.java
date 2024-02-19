@@ -25,6 +25,7 @@ class ReturnPiece {
 	}
 }
 
+
 class ReturnPlay {
 	enum Message {ILLEGAL_MOVE, DRAW, 
 				  RESIGN_BLACK_WINS, RESIGN_WHITE_WINS, 
