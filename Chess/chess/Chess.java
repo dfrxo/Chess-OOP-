@@ -94,28 +94,31 @@ public class Chess {
 		if (thePiece instanceof Pawn) {
 			msg = ((Pawn) thePiece).move(sf2,finalRank);  //    --------------------
 		}
-		else {  // THIS ELSE STATEMENT IS FOR TESTING THE EAT THE PIECE MOVE
-				////////////////////////////////////////////////////////////
-				////////////////////////////////////////////////////////////
-			boolean emptySpace = true;        
-			for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
-			{
-				ReturnPiece pc = piecesOnBoard.get(i);
-				if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == finalRank)
-				{
-					emptySpace=false;
-					newSpot = pc;
-					break; 
-				}
-			}
-			
-			
-			if(emptySpace) {
-				thePiece.pieceRank = finalRank;
-				thePiece.pieceFile = finalFile;
-			}
-			msg.piecesOnBoard = Chess.piecesOnBoard;
-		}
+//		else {  // THIS ELSE STATEMENT IS FOR TESTING THE EAT THE PIECE MOVE
+//				////////////////////////////////////////////////////////////
+//				////////////////////////////////////////////////////////////
+//			boolean emptySpace = true;        
+//			for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
+//			{
+//				ReturnPiece pc = piecesOnBoard.get(i);
+//				if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == finalRank)
+//				{
+//					emptySpace=false;
+//					newSpot = pc;
+//					break; 
+//				}
+//			}
+//			
+//			
+//			if(emptySpace) {
+//				thePiece.pieceRank = finalRank;
+//				thePiece.pieceFile = finalFile;
+//			}
+//			msg.piecesOnBoard = Chess.piecesOnBoard;
+//		}
+
+		
+		
 		//
 		// Code to execute if thePiece is an instance of Pawn
 //		} else if (thePiece instanceof Knight) {
@@ -192,13 +195,66 @@ public class Chess {
 		bK.pieceType = chess.ReturnPiece.PieceType.BK;
 
 		// Initialize black pawns
-		for (chess.ReturnPiece.PieceFile file : chess.ReturnPiece.PieceFile.values()) {
-		    ReturnPiece bP = new ReturnPiece();
-		    bP.pieceFile = file;
-		    bP.pieceRank = 7;
-		    bP.pieceType = chess.ReturnPiece.PieceType.BP;
-		    Chess.piecesOnBoard.add(bP);
-		}
+//		for (chess.ReturnPiece.PieceFile file : chess.ReturnPiece.PieceFile.values()) {
+//		    ReturnPiece bP = new ReturnPiece();
+//		    bP.pieceFile = file;
+//		    bP.pieceRank = 7;
+//		    bP.pieceType = chess.ReturnPiece.PieceType.BP;
+//		    Chess.piecesOnBoard.add(bP);
+//		}
+		// Initialize black pawns
+				ReturnPiece bp1 = new ReturnPiece();
+				bp1.pieceFile = chess.ReturnPiece.PieceFile.a;
+				bp1.pieceRank = 7;
+				bp1.pieceType = chess.ReturnPiece.PieceType.BP;
+				Chess.piecesOnBoard.add(bp1);
+
+				ReturnPiece bp2 = new ReturnPiece();
+				bp2.pieceFile = chess.ReturnPiece.PieceFile.b;
+				bp2.pieceRank = 7;
+				bp2.pieceType = chess.ReturnPiece.PieceType.BP;
+				Chess.piecesOnBoard.add(bp2);
+
+				ReturnPiece bp3 = new ReturnPiece();
+				bp3.pieceFile = chess.ReturnPiece.PieceFile.c;
+				bp3.pieceRank = 7;
+				bp3.pieceType = chess.ReturnPiece.PieceType.BP;
+				Chess.piecesOnBoard.add(bp3);
+
+				ReturnPiece bp4 = new ReturnPiece();
+				bp4.pieceFile = chess.ReturnPiece.PieceFile.d;
+				bp4.pieceRank = 7;
+				bp4.pieceType = chess.ReturnPiece.PieceType.BP;
+				Chess.piecesOnBoard.add(bp4);
+
+				ReturnPiece bp5 = new ReturnPiece();
+				bp5.pieceFile = chess.ReturnPiece.PieceFile.e;
+				bp5.pieceRank = 7;
+				bp5.pieceType = chess.ReturnPiece.PieceType.BP;
+				Chess.piecesOnBoard.add(bp5);
+
+				ReturnPiece bp6 = new ReturnPiece();
+				bp6.pieceFile = chess.ReturnPiece.PieceFile.f;
+				bp6.pieceRank = 7;
+				bp6.pieceType = chess.ReturnPiece.PieceType.BP;
+				Chess.piecesOnBoard.add(bp6);
+
+//				ReturnPiece bp7 = new ReturnPiece();
+//				bp7.pieceFile = chess.ReturnPiece.PieceFile.g;
+//				bp7.pieceRank = 7;
+//				bp7.pieceType = chess.ReturnPiece.PieceType.BP;
+//				Chess.piecesOnBoard.add(bp7);
+				ReturnPiece bp7 = new ReturnPiece();
+				bp7.pieceFile = chess.ReturnPiece.PieceFile.g;
+				bp7.pieceRank = 5;
+				bp7.pieceType = chess.ReturnPiece.PieceType.BP;
+				Chess.piecesOnBoard.add(bp7);
+
+				ReturnPiece bp8 = new ReturnPiece();
+				bp8.pieceFile = chess.ReturnPiece.PieceFile.h;
+				bp8.pieceRank = 7;
+				bp8.pieceType = chess.ReturnPiece.PieceType.BP;
+				Chess.piecesOnBoard.add(bp8);
 
 		// Initialize white pieces similarly
 		ReturnPiece wR1 = new ReturnPiece();

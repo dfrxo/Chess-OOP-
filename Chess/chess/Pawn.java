@@ -7,7 +7,7 @@ import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
 import chess.ReturnPlay.Message;
 
-public class Pawn extends ReturnPiece{
+public class Pawn extends ReturnPiece implements Piece{
 	// Inherited fields :: 
 //	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
 //	        BP, BR, BN, BB, BK, BQ};
@@ -15,7 +15,7 @@ public class Pawn extends ReturnPiece{
 //	PieceType pieceType;
 //	PieceFile pieceFile;
 //	int pieceRank;  // 1..8
-	ArrayList<ReturnPiece> board = (ArrayList<ReturnPiece>)Chess.piecesOnBoard.clone();
+	//ArrayList<ReturnPiece> board = (ArrayList<ReturnPiece>)Chess.piecesOnBoard.clone();
 	int finalRank;
 
 	public boolean checkCheck() {
@@ -51,7 +51,6 @@ public class Pawn extends ReturnPiece{
 		for(ReturnPiece i: Chess.piecesOnBoard) {
 			if(i.equals((ReturnPiece)this)) {
 				p = i;
-				System.out.println("THIS WORKED");
 			}
 		}
 		
@@ -60,7 +59,6 @@ public class Pawn extends ReturnPiece{
 		
 		if(Chess.current == Player.white) { // White piece.   // Chess.current is the current player's turn
 			if(newSpot==null) {
-				char rankk;
 				// it's an empty spot
 				if(color=='W' && pieceRank==2  && rank-this.pieceRank==2) { 
 					this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
@@ -70,7 +68,7 @@ public class Pawn extends ReturnPiece{
 					// this.pieceFile is not working
 					p.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
 					p.pieceRank = rank;
-					
+
 					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;					
 				}
 				// If white 
@@ -82,6 +80,7 @@ public class Pawn extends ReturnPiece{
 					// this.pieceFile is not working
 					p.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
 					p.pieceRank = rank;
+					
 					
 					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;			
 				}
@@ -116,7 +115,7 @@ public class Pawn extends ReturnPiece{
 		for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
 		{
 			ReturnPiece pc = Chess.piecesOnBoard.get(i);
-			if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == finalRank)
+			if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == pieceRank)
 			{
 				newSpot = pc;
 				break; 
@@ -125,12 +124,40 @@ public class Pawn extends ReturnPiece{
 		return newSpot;
 		
 	}
-	public ReturnPlay eatThePiece(ReturnPiece n, int rank) {
+//	for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
+//	{
+//		ReturnPiece pc = piecesOnBoard.get(i);
+//		if (pc.pieceFile.toString().equals(sf1) && pc.pieceRank == initRank)
+//		{
+//			thePiece = pc;
+//			break; 
+//		}
+//	}
+	public ReturnPlay eatThePiece(ReturnPiece newSpot, int newFile) { // Set "this" to newSpot if it's a valid move. Rank is the new rank.
 		chess.ReturnPlay updated_board_message = new chess.ReturnPlay();
-		int currFile = this.pieceRank;    // a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
+		int currRank = this.pieceRank;    // a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
+		String st = this.pieceFile.toString();
+		int currFile = st.charAt(0);
+		int newRank = newSpot.pieceRank;
+		// currFile = 104; -- "h" ascii value. we're at h4
+		// currRank = 4; -- we're at h4 
+		
+		// newFile = 103 ("g) -- where we're moving
+		// newRank = 5;  -- g5 where we're moving
+		
+		if(Math.abs(newRank-currRank)==1 && Math.abs(currFile-newFile)==1) { 
+			String stt = String.valueOf((char)newFile);
+			Chess.piecesOnBoard.remove(newSpot);
+			this.pieceRank = newRank;
+			this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(stt);
+		}
+		else {
+			updated_board_message.message = Message.ILLEGAL_MOVE;
+		}
+		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+		
 				
-				
-		return null;
+		return updated_board_message;
 	}
 //	public ReturnPlay move(ArrayList<ReturnPiece> board, chess.ReturnPiece.PieceFile finalFile, int finalRank) {
 //		// TODO Auto-generated method stub
