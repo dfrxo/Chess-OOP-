@@ -107,6 +107,22 @@ public class Chess {
 		if (thePiece instanceof Pawn) {
 			msg = ((Pawn) thePiece).move(sf2,finalRank);  //    --------------------
 		}
+		// Code to execute if thePiece is an instance of Pawn
+//		} else if (thePiece instanceof Knight) {
+//		    // Code to execute if thePiece is an instance of Knight
+//		} else if (thePiece instanceof Bishop) {
+//		    // Code to execute if thePiece is an instance of Bishop
+		else if (thePiece instanceof Rook) {
+			msg = ((Rook) thePiece).move(sf2, finalRank);
+		}
+//		    // Code to execute if thePiece is an instance of Rook
+//		} else if (thePiece instanceof Queen) {
+//		    // Code to execute if thePiece is an instance of Queen
+//		} else if (thePiece instanceof King) {
+//		    // Code to execute if thePiece is an instance of King
+//		} else {
+		// Code to execute if thePiece does not match any of the above
+//		}
 		else {  // THIS ELSE STATEMENT IS FOR TESTING THE EAT THE PIECE MOVE
 				////////////////////////////////////////////////////////////
 				////////////////////////////////////////////////////////////
@@ -133,20 +149,6 @@ public class Chess {
 		
 		
 		//
-		// Code to execute if thePiece is an instance of Pawn
-//		} else if (thePiece instanceof Knight) {
-//		    // Code to execute if thePiece is an instance of Knight
-//		} else if (thePiece instanceof Bishop) {
-//		    // Code to execute if thePiece is an instance of Bishop
-//		} else if (thePiece instanceof Rook) {
-//		    // Code to execute if thePiece is an instance of Rook
-//		} else if (thePiece instanceof Queen) {
-//		    // Code to execute if thePiece is an instance of Queen
-//		} else if (thePiece instanceof King) {
-//		    // Code to execute if thePiece is an instance of King
-//		} else {
-		// Code to execute if thePiece does not match any of the above
-//		}
 		
 //		if(emptySpace) {
 //			thePiece.pieceRank = finalRank;
@@ -173,11 +175,11 @@ public class Chess {
 	}
 	public static void start() {		
 		// Initialize black rooks
-		ReturnPiece bR1 = new ReturnPiece();
+		ReturnPiece bR1 = new Rook();
 		bR1.pieceFile = chess.ReturnPiece.PieceFile.a;
 		bR1.pieceRank = 8;
 		bR1.pieceType = chess.ReturnPiece.PieceType.BR;
-		ReturnPiece bR2 = new ReturnPiece();
+		ReturnPiece bR2 = new Rook();
 		bR2.pieceFile = chess.ReturnPiece.PieceFile.h;
 		bR2.pieceRank = 8;
 		bR2.pieceType = chess.ReturnPiece.PieceType.BR;
@@ -278,12 +280,12 @@ public class Chess {
 				Chess.piecesOnBoard.add(bp8);
 
 		// Initialize white pieces similarly
-		ReturnPiece wR1 = new ReturnPiece();
+		ReturnPiece wR1 = new Rook();
 		wR1.pieceFile = chess.ReturnPiece.PieceFile.a;
 		wR1.pieceRank = 1;
 		wR1.pieceType = chess.ReturnPiece.PieceType.WR;
 
-		ReturnPiece wR2 = new ReturnPiece();
+		ReturnPiece wR2 = new Rook();
 		wR2.pieceFile = chess.ReturnPiece.PieceFile.h;
 		wR2.pieceRank = 1;
 		wR2.pieceType = chess.ReturnPiece.PieceType.WR;
