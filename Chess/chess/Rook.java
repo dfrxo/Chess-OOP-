@@ -3,8 +3,8 @@ package chess;
 import chess.ReturnPlay.Message; 
 public class Rook extends ReturnPiece implements Piece{
 		
-	String file;
-	int rank;
+	public String file;
+	public int rank;
 	
 	@Override
 	public boolean checkCheck() {
@@ -12,10 +12,9 @@ public class Rook extends ReturnPiece implements Piece{
 		return false;
 	}
 
-	@Override
+	
 	public boolean validMove() {
-		
-		
+				
 		int NewfileNumber = file.charAt(0);  // Used to put a numeric value on FILE 
 		// a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
 		String piecefilestring = this.pieceFile.toString();
@@ -97,7 +96,6 @@ public class Rook extends ReturnPiece implements Piece{
 		return false;
 	}
 
-	@Override
 	public ReturnPlay move(String file, int rank) {
 		this.file = file;
 		this.rank = rank;
@@ -110,15 +108,14 @@ public class Rook extends ReturnPiece implements Piece{
 		String st = String.valueOf(this.pieceType); // CURRENT PIECE
 		char color = st.charAt(0); 		// Color of current piece
 		
-		Rook r = new Rook();
-		boolean isValid = r.validMove();
+		boolean isValid = validMove();
 		
 		if (!isValid) {
 			updated_board_message.message = Message.ILLEGAL_MOVE;
 			return updated_board_message;
 		}
 		
-		
+		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 		ReturnPiece newSpot = null;
 		// Searches for where we're moving it to    -  We need to put this in each piece class	
 				for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
@@ -135,7 +132,6 @@ public class Rook extends ReturnPiece implements Piece{
 		this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
 		return updated_board_message;
 		
-
 	}
 
 	@Override
