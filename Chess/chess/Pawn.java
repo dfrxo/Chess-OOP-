@@ -140,15 +140,7 @@ public class Pawn extends ReturnPiece implements Piece{
 		return newSpot;
 		
 	}
-//	for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
-//	{
-//		ReturnPiece pc = piecesOnBoard.get(i);
-//		if (pc.pieceFile.toString().equals(sf1) && pc.pieceRank == initRank)
-//		{
-//			thePiece = pc;
-//			break; 
-//		}
-//	}
+
 	public ReturnPlay eatThePiece(ReturnPiece newSpot, int newFile) { // Set "this" to newSpot if it's a valid move. Rank is the new rank.
 		chess.ReturnPlay updated_board_message = new chess.ReturnPlay();
 		int currRank = this.pieceRank;    // a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104

@@ -107,20 +107,23 @@ public class Chess {
 		if (thePiece instanceof Pawn) {
 			msg = ((Pawn) thePiece).move(sf2,finalRank);  //    --------------------
 		}
-		// Code to execute if thePiece is an instance of Pawn
-//		} else if (thePiece instanceof Knight) {
-//		    // Code to execute if thePiece is an instance of Knight
-//		} else if (thePiece instanceof Bishop) {
-//		    // Code to execute if thePiece is an instance of Bishop
+		else if (thePiece instanceof Knight) {
+			msg = ((Knight) thePiece).move(sf2, finalRank);
+
+		} 
+		//else if (thePiece instanceof Bishop) {
+			
+		//}
 		else if (thePiece instanceof Rook) {
 			msg = ((Rook) thePiece).move(sf2, finalRank);
 		}
-//		    // Code to execute if thePiece is an instance of Rook
-//		} else if (thePiece instanceof Queen) {
-//		    // Code to execute if thePiece is an instance of Queen
-//		} else if (thePiece instanceof King) {
-//		    // Code to execute if thePiece is an instance of King
-//		} else {
+//		else if (thePiece instanceof Queen) {
+//
+//		} 
+//		else if (thePiece instanceof King) {
+//		
+//		}
+//		else {
 		// Code to execute if thePiece does not match any of the above
 //		}
 		else {  // THIS ELSE STATEMENT IS FOR TESTING THE EAT THE PIECE MOVE
@@ -184,12 +187,12 @@ public class Chess {
 		bR2.pieceRank = 8;
 		bR2.pieceType = chess.ReturnPiece.PieceType.BR;
 		// Initialize black knights
-		ReturnPiece bN1 = new ReturnPiece();
+		ReturnPiece bN1 = new Knight();
 		bN1.pieceFile = chess.ReturnPiece.PieceFile.b;
 		bN1.pieceRank = 8;
 		bN1.pieceType = chess.ReturnPiece.PieceType.BN;
 
-		ReturnPiece bN2 = new ReturnPiece();
+		ReturnPiece bN2 = new Knight();
 		bN2.pieceFile = chess.ReturnPiece.PieceFile.g;
 		bN2.pieceRank = 8;
 		bN2.pieceType = chess.ReturnPiece.PieceType.BN;
@@ -290,12 +293,12 @@ public class Chess {
 		wR2.pieceRank = 1;
 		wR2.pieceType = chess.ReturnPiece.PieceType.WR;
 		// Initialize white knights
-		ReturnPiece wN1 = new ReturnPiece();
+		ReturnPiece wN1 = new Knight();
 		wN1.pieceFile = chess.ReturnPiece.PieceFile.b;
 		wN1.pieceRank = 1;
 		wN1.pieceType = chess.ReturnPiece.PieceType.WN;
 
-		ReturnPiece wN2 = new ReturnPiece();
+		ReturnPiece wN2 = new Knight();
 		wN2.pieceFile = chess.ReturnPiece.PieceFile.g;
 		wN2.pieceRank = 1;
 		wN2.pieceType = chess.ReturnPiece.PieceType.WN;
