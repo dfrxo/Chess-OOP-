@@ -66,14 +66,43 @@ public class Knight extends ReturnPiece implements Piece{
 				updated_board_message.message = Message.ILLEGAL_MOVE;
 			}
 			else {              // There's a piece you can EAT
-				
+				updated_board_message = eatThePiece(newSpot, fileNumber);
 			}
 		}
 		else { // Black's turn
-			
+			if(newSpot==null) { // Empty spot
+				if(color == 'B') {
+					if((x==1 && y==2) || (x==2 && y==1) || (x==2 && y==-1) || (x==1 && y==-2) || 
+							(x==-1 && y==-2) || (x==-2 && y==-1) || (x==-2 && y==1) || (x==-1 && y==2)) {
+						this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
+						this.pieceRank = rank;
+						updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+					}
+					else {
+						updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+						updated_board_message.message = ReturnPlay.Message.ILLEGAL_MOVE;
+						System.err.println("That's illegal");
+					}
+				}
+				else {
+					System.err.println("You tried to move the wrong color piece :(");
+					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+					updated_board_message.message = ReturnPlay.Message.ILLEGAL_MOVE;
+				}
+			}
+			else if(newSpot.pieceType.toString().toLowerCase().charAt(0) == Chess.current.toString().charAt(0)) {   // Checks if eating own piece
+				System.err.println("You tried to eat your own color piece.");
+				updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+				updated_board_message.message = Message.ILLEGAL_MOVE;
+			}
+			else {              // There's a piece you can EAT
+				updated_board_message = eatThePiece(newSpot, fileNumber);
+			}
 		}
 		
-		
+		if(updated_board_message.message==null) {
+			Chess.changePlayer();
+		}
 		
 		
 		return 	updated_board_message;
@@ -93,9 +122,24 @@ public class Knight extends ReturnPiece implements Piece{
 		return newSpot;		
 	}
 
-	public ReturnPlay eatThePiece(ReturnPiece eatThePiece, int rank) {
-		// TODO Auto-generated method stub
-		return null;
+	public ReturnPlay eatThePiece(ReturnPiece newSpot, int newFile) {
+		chess.ReturnPlay updated_board_message = new chess.ReturnPlay();
+		//int currRank = this.pieceRank;    // a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
+		//String st = this.pieceFile.toString();
+		//int currFile = st.charAt(0);
+		int newRank = newSpot.pieceRank;
+		
+		
+		String stt = String.valueOf((char)newFile);
+		Chess.piecesOnBoard.remove(newSpot);
+		Chess.piecesOnBoard.remove(newSpot);
+		this.pieceRank = newRank;
+		this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(stt);
+		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+
+		
+		
+		return updated_board_message;
 	}
 
 }

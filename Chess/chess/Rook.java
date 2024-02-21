@@ -135,7 +135,7 @@ public class Rook extends ReturnPiece implements Piece{
 	}
 
 	@Override
-	public ReturnPiece findNewSpot(String file, int rank) {
+	public ReturnPiece findNewSpot(String newSpot, int newFile) {
 		// TODO Auto-generated method stub
 		return null;
 	}

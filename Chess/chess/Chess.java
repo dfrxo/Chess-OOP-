@@ -58,6 +58,7 @@ public class Chess {
 	public static ReturnPlay play(String move) {
 		// h2 h3
 		// convert 'h' to PieceFile h (done)
+		move = move.trim();
 		String sf1 = String.valueOf(move.charAt(0));  // h
 		String sr1 = String.valueOf(move.charAt(1));  // 2
 		String sf2 = String.valueOf(move.charAt(3));  // h 
@@ -193,8 +194,10 @@ public class Chess {
 		bN1.pieceType = chess.ReturnPiece.PieceType.BN;
 
 		ReturnPiece bN2 = new Knight();
-		bN2.pieceFile = chess.ReturnPiece.PieceFile.g;
-		bN2.pieceRank = 8;
+		bN2.pieceFile = chess.ReturnPiece.PieceFile.d;
+		bN2.pieceRank = 4;
+//		bN2.pieceFile = chess.ReturnPiece.PieceFile.g;
+//		bN2.pieceRank = 8;
 		bN2.pieceType = chess.ReturnPiece.PieceType.BN;
 
 		// Initialize black bishops
@@ -294,8 +297,10 @@ public class Chess {
 		wR2.pieceType = chess.ReturnPiece.PieceType.WR;
 		// Initialize white knights
 		ReturnPiece wN1 = new Knight();
-		wN1.pieceFile = chess.ReturnPiece.PieceFile.b;
-		wN1.pieceRank = 1;
+//		wN1.pieceFile = chess.ReturnPiece.PieceFile.b;
+		wN1.pieceFile = chess.ReturnPiece.PieceFile.e;
+//		wN1.pieceRank = 1;
+		wN1.pieceRank = 5;
 		wN1.pieceType = chess.ReturnPiece.PieceType.WN;
 
 		ReturnPiece wN2 = new Knight();

@@ -12,5 +12,5 @@ public interface Piece {
 
     ReturnPiece findNewSpot(String file, int rank);
 
-    ReturnPlay eatThePiece(ReturnPiece eatThePiece, int rank);
+    ReturnPlay eatThePiece(ReturnPiece newSpot, int newRank);
 }
