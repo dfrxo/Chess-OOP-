@@ -65,15 +65,15 @@ public class Chess {
 		move = move.trim();
 		
 		try {
-		if(move.substring(0,2).equals(move.substring(3,5))) { // Checks if they did -- h2 h2 -- move to the same spot
+			if(move.substring(0,2).equals(move.substring(3,5))) { // Checks if they did -- h2 h2 -- move to the same spot
+
+			}
+		}	
+		catch(Exception e){
 			msg.piecesOnBoard = piecesOnBoard;
 			msg.message = ReturnPlay.Message.ILLEGAL_MOVE;
-			System.err.println("You didn't move the piece");
+			System.err.println("Wrong input");
 			return msg;
-		}
-		}
-		finally {
-			
 		}
 		
 		
@@ -144,40 +144,34 @@ public class Chess {
 //		else {
 		// Code to execute if thePiece does not match any of the above
 //		}
-		else {  // THIS ELSE STATEMENT IS FOR TESTING THE EAT THE PIECE MOVE
-				////////////////////////////////////////////////////////////
-				////////////////////////////////////////////////////////////
-			boolean emptySpace = true;        
-			for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
-			{
-				ReturnPiece pc = piecesOnBoard.get(i);
-				if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == finalRank)
-				{
-					emptySpace=false;
-					newSpot = pc;
-					break; 
-				}
-			}
-			
-			
-			if(emptySpace) {
-				thePiece.pieceRank = finalRank;
-				thePiece.pieceFile = finalFile;
-			}
-			msg.piecesOnBoard = Chess.piecesOnBoard;
-		}
+//		else {  // THIS ELSE STATEMENT IS FOR TESTING THE EAT THE PIECE MOVE
+//				////////////////////////////////////////////////////////////
+//				////////////////////////////////////////////////////////////
+//			boolean emptySpace = true;        
+//			for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
+//			{
+//				ReturnPiece pc = piecesOnBoard.get(i);
+//				if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == finalRank)
+//				{
+//					emptySpace=false;
+//					newSpot = pc;
+//					break; 
+//				}
+//			}
+//			
+//			
+//			if(emptySpace) {
+//				thePiece.pieceRank = finalRank;
+//				thePiece.pieceFile = finalFile;
+//			}
+//			msg.piecesOnBoard = Chess.piecesOnBoard;
+//		}
 
+			/////////////////////////////////////////////////////////////////////
+		////////////////TESTING ONLY. REMOVE LATER//////////////////////////////
+		/////////////////////////////////////////////////////////////////////////
 		
-		
-		//
-		
-//		if(emptySpace) {
-//			thePiece.pieceRank = finalRank;
-//			thePiece.pieceFile = finalFile;
-//		}
-//		else {
-//			// we eat the whatever piece is in there
-//		}
+	
 		
 		return msg;
 	}
@@ -211,8 +205,6 @@ public class Chess {
 		bN1.pieceType = chess.ReturnPiece.PieceType.BN;
 
 		ReturnPiece bN2 = new Knight();
-//		bN2.pieceFile = chess.ReturnPiece.PieceFile.d;
-//		bN2.pieceRank = 4;
 		bN2.pieceFile = chess.ReturnPiece.PieceFile.g;
 		bN2.pieceRank = 8;
 		bN2.pieceType = chess.ReturnPiece.PieceType.BN;
@@ -258,11 +250,11 @@ public class Chess {
 				bp3.pieceType = chess.ReturnPiece.PieceType.BP;
 				Chess.piecesOnBoard.add(bp3);
 
-				ReturnPiece bp4 = new Pawn();
-				bp4.pieceFile = chess.ReturnPiece.PieceFile.d;
-				bp4.pieceRank = 7;
-				bp4.pieceType = chess.ReturnPiece.PieceType.BP;
-				Chess.piecesOnBoard.add(bp4);
+//				ReturnPiece bp4 = new Pawn();
+//				bp4.pieceFile = chess.ReturnPiece.PieceFile.d;
+//				bp4.pieceRank = 7;
+//				bp4.pieceType = chess.ReturnPiece.PieceType.BP;
+//				Chess.piecesOnBoard.add(bp4);
 
 				ReturnPiece bp5 = new Pawn();
 				bp5.pieceFile = chess.ReturnPiece.PieceFile.e;
@@ -281,11 +273,7 @@ public class Chess {
 				bp7.pieceRank = 7;
 				bp7.pieceType = chess.ReturnPiece.PieceType.BP;
 				Chess.piecesOnBoard.add(bp7);
-//				ReturnPiece bp7 = new ReturnPiece();
-//				bp7.pieceFile = chess.ReturnPiece.PieceFile.g;
-//				bp7.pieceRank = 5;
-//				bp7.pieceType = chess.ReturnPiece.PieceType.BP;
-//				Chess.piecesOnBoard.add(bp7);
+
 
 				ReturnPiece bp8 = new Pawn();
 				bp8.pieceFile = chess.ReturnPiece.PieceFile.h;
@@ -305,10 +293,8 @@ public class Chess {
 		wR2.pieceType = chess.ReturnPiece.PieceType.WR;
 		// Initialize white knights
 		ReturnPiece wN1 = new Knight();
-//		wN1.pieceFile = chess.ReturnPiece.PieceFile.b;
-		wN1.pieceFile = chess.ReturnPiece.PieceFile.e;
-//		wN1.pieceRank = 1;
-		wN1.pieceRank = 5;
+		wN1.pieceFile = chess.ReturnPiece.PieceFile.b;
+		wN1.pieceRank = 1;
 		wN1.pieceType = chess.ReturnPiece.PieceType.WN;
 
 		ReturnPiece wN2 = new Knight();
@@ -358,12 +344,11 @@ public class Chess {
 		wp3.pieceType = chess.ReturnPiece.PieceType.WP;
 		Chess.piecesOnBoard.add(wp3);
 
-		ReturnPiece wp4 = new Pawn();
-		wp4.pieceFile = chess.ReturnPiece.PieceFile.d;
-		wp4.pieceRank = 6;
+//		ReturnPiece wp4 = new Pawn();
+//		wp4.pieceFile = chess.ReturnPiece.PieceFile.d;
 //		wp4.pieceRank = 2;
-		wp4.pieceType = chess.ReturnPiece.PieceType.WP;
-		Chess.piecesOnBoard.add(wp4);
+//		wp4.pieceType = chess.ReturnPiece.PieceType.WP;
+//		Chess.piecesOnBoard.add(wp4);
 
 		ReturnPiece wp5 = new Pawn();
 		wp5.pieceFile = chess.ReturnPiece.PieceFile.e;
@@ -379,8 +364,7 @@ public class Chess {
 
 		ReturnPiece wp7 = new Pawn();
 		wp7.pieceFile = chess.ReturnPiece.PieceFile.g;
-//		wp7.pieceRank = 2;
-		wp7.pieceRank = 5;
+		wp7.pieceRank = 2;
 		wp7.pieceType = chess.ReturnPiece.PieceType.WP;
 		Chess.piecesOnBoard.add(wp7);
 
@@ -407,15 +391,7 @@ public class Chess {
 		Chess.piecesOnBoard.add(wB2);
 		Chess.piecesOnBoard.add(wQ);
 		Chess.piecesOnBoard.add(wK);	
-		Chess.piecesOnBoard.add(wp1);
-		Chess.piecesOnBoard.add(wp2);
-		Chess.piecesOnBoard.add(wp3);
-		Chess.piecesOnBoard.add(wp4);
-		Chess.piecesOnBoard.add(wp5);
-		Chess.piecesOnBoard.add(wp6);
-		Chess.piecesOnBoard.add(wp7);
-		Chess.piecesOnBoard.add(wp8);
-		
+
 		Chess.current = Player.white;
 		
 		PlayChess.printBoard(Chess.piecesOnBoard);

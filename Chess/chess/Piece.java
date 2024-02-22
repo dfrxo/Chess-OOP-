@@ -1,6 +1,5 @@
 package chess;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public abstract class Piece extends ReturnPiece{
@@ -25,7 +24,7 @@ public abstract class Piece extends ReturnPiece{
 		HashSet<Integer> spotSet = new HashSet<>();
 		ReturnPiece newSpot=null;
 		int spotsToCheck=0;
-		
+		boolean fileChange=false;
 		
 		if(direction.equals("up")) {
 			spotsToCheck=newRank-this.pieceRank;
@@ -34,10 +33,18 @@ public abstract class Piece extends ReturnPiece{
 			}			
 		}
 		else if(direction.equals("left")) {
-			
+			fileChange = true;
+			spotsToCheck=currFile-newFile;
+			for(int j = currFile-1; j>newFile; j--) {
+				spotSet.add(j);
+			}
 		}
 		else if(direction.equals("right")) {
-			
+			fileChange =true;
+			spotsToCheck=newFile-currFile;
+			for(int j = currFile+1; j<newFile; j++) {
+				spotSet.add(j);
+			}
 		}
 		else if(direction.equals("down")) {
 			spotsToCheck=this.pieceRank-newRank;
@@ -45,17 +52,31 @@ public abstract class Piece extends ReturnPiece{
 				spotSet.add(j);
 			}	
 		}
-
-		for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
-		{
-			ReturnPiece pc = Chess.piecesOnBoard.get(i);
-			if(pc.pieceFile.toString().charAt(0)==currFile) {
-				if(spotSet.contains(pc.pieceRank)) {
-					return false;
+		
+		if(fileChange) {
+			for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
+			{
+				ReturnPiece pc = Chess.piecesOnBoard.get(i);
+				if(pc.pieceRank==this.pieceRank) {
+					if(spotSet.contains((int)pc.pieceFile.toString().charAt(0))) {
+						return false;
+					}
+				}
+				
+			}
+		}
+		else {
+			for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
+				{
+					ReturnPiece pc = Chess.piecesOnBoard.get(i);
+					if(pc.pieceFile.toString().charAt(0)==currFile) {
+						if(spotSet.contains(pc.pieceRank)) {
+							return false;
+						}
+					}
+					
 				}
 			}
-			
-		}
 		return true;
 	}
 }

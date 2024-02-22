@@ -1,7 +1,5 @@
 package chess;
 
-import java.util.HashSet;
-
 import chess.Chess.Player;
 import chess.ReturnPlay.Message;
 
@@ -25,6 +23,132 @@ public class Queen extends Piece{
 		if(Chess.current == Player.white) { // White piece.   // Chess.current is the current player's turn
 			if(newSpot==null) {
 				if(color == 'W') {
+					if((currFileNumber == newFileNumber)) {  // if 'h' == 'h' (104==104)
+						
+						// Check each spot till you reach the new spot						
+						if(rank>this.pieceRank) {
+							if(!straightLineCheck(newFileNumber,rank,"up")) {
+								System.err.println("Blocked by another piece");
+								updated_board_message.message = Message.ILLEGAL_MOVE;
+							}
+							else {
+								this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
+								this.pieceRank = rank;									
+							}
+						}
+						else if(rank<this.pieceRank) {
+							if(!straightLineCheck(newFileNumber,rank,"down")) {
+								System.err.println("Blocked by another piece");
+								updated_board_message.message = Message.ILLEGAL_MOVE;
+							}
+							else {
+								this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
+								this.pieceRank = rank;									
+							}
+						}
+						
+						updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+					}
+					else if((this.pieceRank==rank)) {
+						if(currFileNumber>newFileNumber) {
+							if(!straightLineCheck(newFileNumber,rank,"left")) {
+								System.err.println("Blocked by another piece");
+								updated_board_message.message = Message.ILLEGAL_MOVE;
+							}
+							else {
+								this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
+								this.pieceRank = rank;									
+							}
+						}
+						else if(currFileNumber<newFileNumber) {
+							if(!straightLineCheck(newFileNumber,rank,"right")) {
+								System.err.println("Blocked by another piece");
+								updated_board_message.message = Message.ILLEGAL_MOVE;
+							}
+							else {
+								this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
+								this.pieceRank = rank;									
+							}
+						}
+						
+						updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+					}
+					else if(Math.abs(newFileNumber-currFileNumber)==Math.abs(this.pieceRank-rank)) {
+						////////////////////////////////////////////////////////////////////
+						// Check each spot till you reach the new spot
+						///////////////////////////////////////////////////////////////////
+						System.out.println("Diagonal move test");
+						this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
+						this.pieceRank = rank;
+						updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+					}
+					else {
+						updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+						updated_board_message.message = ReturnPlay.Message.ILLEGAL_MOVE;
+						System.err.println("That's illegal");
+					}
+				}
+				else {
+					System.err.println("You tried to move the wrong color piece :(");
+					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+					updated_board_message.message = ReturnPlay.Message.ILLEGAL_MOVE;
+				}
+				
+			}
+			else if(newSpot.pieceType.toString().toLowerCase().charAt(0) == Chess.current.toString().charAt(0)) {   // Checks if eating own piece
+				System.err.println("You tried to eat your own color piece.");
+				updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+				updated_board_message.message = Message.ILLEGAL_MOVE;
+			}
+			
+			else {
+				// first check if there's any pieces in the way
+				// try and eat the piece
+				if((currFileNumber == newFileNumber)) {  // if 'h' == 'h' (104==104)
+					if(rank>this.pieceRank) {
+						if(!straightLineCheck(newFileNumber,rank,"up")) {
+							System.err.println("Blocked by another piece");
+							updated_board_message.message = Message.ILLEGAL_MOVE;							
+						}
+						else {
+							updated_board_message = eatThePiece(newSpot, newFileNumber);
+						}
+					}
+					if(rank<this.pieceRank) {
+						if(!straightLineCheck(newFileNumber,rank,"down")) {
+							System.err.println("Blocked by another piece");
+							updated_board_message.message = Message.ILLEGAL_MOVE;							
+						}
+						else {
+							updated_board_message = eatThePiece(newSpot, newFileNumber);
+						}
+					}
+				}
+				else if((this.pieceRank==rank)) {
+					if(currFileNumber>newFileNumber) {
+						if(!straightLineCheck(newFileNumber,rank,"left")) {
+							System.err.println("Blocked by another piece");
+							updated_board_message.message = Message.ILLEGAL_MOVE;							
+						}
+						else {
+							updated_board_message = eatThePiece(newSpot, newFileNumber);
+						}
+					}
+					else if(currFileNumber<newFileNumber) {
+						if(!straightLineCheck(newFileNumber,rank,"right")) {
+							System.err.println("Blocked by another piece");
+							updated_board_message.message = Message.ILLEGAL_MOVE;							
+						}
+						else {
+							updated_board_message = eatThePiece(newSpot, newFileNumber);
+						}
+					}
+				}
+			}
+		}
+		else {  // Black piece
+			if(newSpot==null) {
+				if(color == 'B') {
 					if((currFileNumber == newFileNumber)) {  // if 'h' == 'h' (104==104)
 						
 						// Check each spot till you reach the new spot
@@ -54,25 +178,25 @@ public class Queen extends Piece{
 						updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 					}
 					else if((this.pieceRank==rank)) {
-						if(rank>this.pieceRank) {
-//							if(!straightLineCheck(newFileNumber,rank,"up")) {
-//								System.err.println("Blocked by another piece");
-//								updated_board_message.message = Message.ILLEGAL_MOVE;
-//							}
-//							else {
-//								this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
-//								this.pieceRank = rank;									
-//							}
-//						}
-//						else if(rank<this.pieceRank) {
-//							if(!straightLineCheck(newFileNumber,rank,"down")) {
-//								System.err.println("Blocked by another piece");
-//								updated_board_message.message = Message.ILLEGAL_MOVE;
-//							}
-//							else {
-//								this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
-//								this.pieceRank = rank;									
-//							}
+						if(currFileNumber>newFileNumber) {
+							if(!straightLineCheck(newFileNumber,rank,"left")) {
+								System.err.println("Blocked by another piece");
+								updated_board_message.message = Message.ILLEGAL_MOVE;
+							}
+							else {
+								this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
+								this.pieceRank = rank;									
+							}
+						}
+						else if(currFileNumber<newFileNumber) {
+							if(!straightLineCheck(newFileNumber,rank,"right")) {
+								System.err.println("Blocked by another piece");
+								updated_board_message.message = Message.ILLEGAL_MOVE;
+							}
+							else {
+								this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
+								this.pieceRank = rank;									
+							}
 						}
 						
 						updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
@@ -91,6 +215,11 @@ public class Queen extends Piece{
 						System.err.println("That's illegal");
 					}
 				}
+				else {
+					System.err.println("You tried to move the wrong color piece :(");
+					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+					updated_board_message.message = ReturnPlay.Message.ILLEGAL_MOVE;
+				}
 			}
 			else if(newSpot.pieceType.toString().toLowerCase().charAt(0) == Chess.current.toString().charAt(0)) {   // Checks if eating own piece
 				System.err.println("You tried to eat your own color piece.");
@@ -101,49 +230,6 @@ public class Queen extends Piece{
 			else {
 				// first check if there's any pieces in the way
 				// try and eat the piece
-				updated_board_message = eatThePiece(newSpot, newFileNumber);
-
-			}
-		}
-		else {  // Black piece
-			if(newSpot==null) {
-				if(color == 'B') {
-					if((currFileNumber == newFileNumber) || (this.pieceRank == rank)) {  // if 'h' == 'h' (104==104)
-						
-						
-						System.out.println("upwards test");
-						// Check each spot till you reach the new spot
-						
-						this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
-						this.pieceRank = rank;
-						updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
-
-					}
-					else if(Math.abs(newFileNumber-currFileNumber)==Math.abs(this.pieceRank-rank)) {
-						
-						System.out.println("Diagonal move test");
-						// Check each spot till you reach the new spot
-						
-						this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
-						this.pieceRank = rank;
-						updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
-					}
-					else {
-						updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
-						updated_board_message.message = ReturnPlay.Message.ILLEGAL_MOVE;
-						System.err.println("That's illegal");
-					}
-				}
-			}
-			else if(newSpot.pieceType.toString().toLowerCase().charAt(0) == Chess.current.toString().charAt(0)) {   // Checks if eating own piece
-				System.err.println("You tried to eat your own color piece.");
-				updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
-				updated_board_message.message = Message.ILLEGAL_MOVE;
-			}
-			else {
-				// first check if there's any pieces in the way
-				// try and eat the piece				
-				
 				updated_board_message = eatThePiece(newSpot, newFileNumber);
 
 			}
@@ -169,9 +255,22 @@ public class Queen extends Piece{
 		return newSpot;				
 	}
 
-	public ReturnPlay eatThePiece(ReturnPiece newSpot, int newRank) {
-		// TODO Auto-generated method stub
-		return null;
+	public ReturnPlay eatThePiece(ReturnPiece newSpot, int newFile) {
+		chess.ReturnPlay updated_board_message = new chess.ReturnPlay();
+		//int currRank = this.pieceRank;    // a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
+		//String st = this.pieceFile.toString();
+		//int currFile = st.charAt(0);
+		
+		
+		
+		int newRank = newSpot.pieceRank;
+		String stt = String.valueOf((char)newFile);
+		Chess.piecesOnBoard.remove(newSpot);
+		this.pieceRank = newRank;
+		this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(stt);
+		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+		
+		return updated_board_message;
 	}
 
 

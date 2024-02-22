@@ -132,7 +132,6 @@ public class Knight extends Piece{
 		
 		String stt = String.valueOf((char)newFile);
 		Chess.piecesOnBoard.remove(newSpot);
-		Chess.piecesOnBoard.remove(newSpot);
 		this.pieceRank = newRank;
 		this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(stt);
 		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;

@@ -204,24 +204,33 @@ public class Pawn extends Piece{
 
 		return updated_board_message;
 	}
-//	public ReturnPlay move(ArrayList<ReturnPiece> board, chess.ReturnPiece.PieceFile finalFile, int finalRank) {
-//		// TODO Auto-generated method stub
-//		if (!checkCheck() && validMove())
-//		{
-//			  chess.ReturnPlay updated_board_message = new chess.ReturnPlay();
-//			  
-//			  int ind = board.indexOf(pce);
-//			  pce.pieceFile = finalFile;
-//			  pce.pieceRank = finalRank;
-//			  board.set(ind, pce);
-//			  
-//			  updated_board_message.piecesOnBoard = board;
-//			  updated_board_message.message = m;
-//			  
-//			  return updated_board_message;
-//			  
-//		}
-//		return null;
-//	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		
