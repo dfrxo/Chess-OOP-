@@ -7,7 +7,12 @@ import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
 import chess.ReturnPlay.Message;
 
-public class Pawn extends ReturnPiece implements Piece{
+
+
+
+//NEED TO FIX 2 PIECE JUMP OVER A PIECE 
+
+public class Pawn extends Piece{
 	// Inherited fields :: 
 //	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
 //	        BP, BR, BN, BB, BK, BQ};

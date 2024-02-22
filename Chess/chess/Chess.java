@@ -58,7 +58,27 @@ public class Chess {
 	public static ReturnPlay play(String move) {
 		// h2 h3
 		// convert 'h' to PieceFile h (done)
+		
+		ReturnPiece thePiece=null; // thePiece = the piece we're moving 
+		ReturnPiece newSpot = null;
+		ReturnPlay msg = new ReturnPlay();
 		move = move.trim();
+		
+		try {
+		if(move.substring(0,2).equals(move.substring(3,5))) { // Checks if they did -- h2 h2 -- move to the same spot
+			msg.piecesOnBoard = piecesOnBoard;
+			msg.message = ReturnPlay.Message.ILLEGAL_MOVE;
+			System.err.println("You didn't move the piece");
+			return msg;
+		}
+		}
+		finally {
+			
+		}
+		
+		
+		
+		
 		String sf1 = String.valueOf(move.charAt(0));  // h
 		String sr1 = String.valueOf(move.charAt(1));  // 2
 		String sf2 = String.valueOf(move.charAt(3));  // h 
@@ -72,9 +92,6 @@ public class Chess {
 		// After getting initial file and rank, piecesOnBoard[] to find which piece is at that address. 
 		// Call the piece and return the outcome of that play by updating the board.
 		
-		ReturnPiece thePiece=null; // thePiece = the piece we're moving 
-		ReturnPiece newSpot = null;
-		ReturnPlay msg = new ReturnPlay();
 
 		// Searches for the piece we're moving
 		for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
@@ -95,7 +112,7 @@ public class Chess {
 		}
 		
 		
-		// Searches for where we're moving it to    -  We need to put this in each piece class	
+//		// Searches for where we're moving it to    -  We need to put this in each piece class	
 		for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
 		{
 			ReturnPiece pc = piecesOnBoard.get(i);
@@ -113,14 +130,14 @@ public class Chess {
 
 		} 
 		//else if (thePiece instanceof Bishop) {
-			
+		//	
 		//}
 		else if (thePiece instanceof Rook) {
 			msg = ((Rook) thePiece).move(sf2, finalRank);
 		}
-//		else if (thePiece instanceof Queen) {
-//
-//		} 
+		else if (thePiece instanceof Queen) {
+			msg = ((Queen) thePiece).move(sf2, finalRank);
+		} 
 //		else if (thePiece instanceof King) {
 //		
 //		}
@@ -194,10 +211,10 @@ public class Chess {
 		bN1.pieceType = chess.ReturnPiece.PieceType.BN;
 
 		ReturnPiece bN2 = new Knight();
-		bN2.pieceFile = chess.ReturnPiece.PieceFile.d;
-		bN2.pieceRank = 4;
-//		bN2.pieceFile = chess.ReturnPiece.PieceFile.g;
-//		bN2.pieceRank = 8;
+//		bN2.pieceFile = chess.ReturnPiece.PieceFile.d;
+//		bN2.pieceRank = 4;
+		bN2.pieceFile = chess.ReturnPiece.PieceFile.g;
+		bN2.pieceRank = 8;
 		bN2.pieceType = chess.ReturnPiece.PieceType.BN;
 
 		// Initialize black bishops
@@ -212,7 +229,7 @@ public class Chess {
 		bB2.pieceType = chess.ReturnPiece.PieceType.BB;
 
 		// Initialize black queen
-		ReturnPiece bQ = new ReturnPiece();
+		ReturnPiece bQ = new Queen();
 		bQ.pieceFile = chess.ReturnPiece.PieceFile.d;
 		bQ.pieceRank = 8;
 		bQ.pieceType = chess.ReturnPiece.PieceType.BQ;
@@ -223,15 +240,6 @@ public class Chess {
 		bK.pieceRank = 8;
 		bK.pieceType = chess.ReturnPiece.PieceType.BK;
 
-		// Initialize black pawns
-//		for (chess.ReturnPiece.PieceFile file : chess.ReturnPiece.PieceFile.values()) {
-//		    ReturnPiece bP = new ReturnPiece();
-//		    bP.pieceFile = file;
-//		    bP.pieceRank = 7;
-//		    bP.pieceType = chess.ReturnPiece.PieceType.BP;
-//		    Chess.piecesOnBoard.add(bP);
-//		}
-		// Initialize black pawns
 				ReturnPiece bp1 = new Pawn();
 				bp1.pieceFile = chess.ReturnPiece.PieceFile.a;
 				bp1.pieceRank = 4;
@@ -320,7 +328,7 @@ public class Chess {
 		wB2.pieceType = chess.ReturnPiece.PieceType.WB;
 
 		// Initialize black queen
-		ReturnPiece wQ = new ReturnPiece();
+		ReturnPiece wQ = new Queen();
 		wQ.pieceFile = chess.ReturnPiece.PieceFile.d;
 		wQ.pieceRank = 1;
 		wQ.pieceType = chess.ReturnPiece.PieceType.WQ;
@@ -352,7 +360,8 @@ public class Chess {
 
 		ReturnPiece wp4 = new Pawn();
 		wp4.pieceFile = chess.ReturnPiece.PieceFile.d;
-		wp4.pieceRank = 2;
+		wp4.pieceRank = 6;
+//		wp4.pieceRank = 2;
 		wp4.pieceType = chess.ReturnPiece.PieceType.WP;
 		Chess.piecesOnBoard.add(wp4);
 
@@ -410,8 +419,6 @@ public class Chess {
 		Chess.current = Player.white;
 		
 		PlayChess.printBoard(Chess.piecesOnBoard);
-		
-		//ReturnPiece p1 = new Pawn(wp1,Chess.piecesOnBoard, null, 0);
-	}
+		}
 
 }

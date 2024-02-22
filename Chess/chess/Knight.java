@@ -5,7 +5,7 @@ import java.util.HashMap;
 import chess.Chess.Player;
 import chess.ReturnPlay.Message;
 
-public class Knight extends ReturnPiece implements Piece{
+public class Knight extends Piece{
 	// Inherited fields :: 
 //	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
 //	        BP, BR, BN, BB, BK, BQ};

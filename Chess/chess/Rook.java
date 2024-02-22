@@ -1,7 +1,7 @@
 package chess;
 
 import chess.ReturnPlay.Message; 
-public class Rook extends ReturnPiece implements Piece{
+public class Rook extends Piece{
 		
 	public String file;
 	public int rank;
