@@ -352,7 +352,8 @@ public class Chess {
 
 		ReturnPiece wp5 = new Pawn();
 		wp5.pieceFile = chess.ReturnPiece.PieceFile.e;
-		wp5.pieceRank = 2;
+		//wp5.pieceRank = 2;
+		wp5.pieceRank = 5;
 		wp5.pieceType = chess.ReturnPiece.PieceType.WP;
 		Chess.piecesOnBoard.add(wp5);
 

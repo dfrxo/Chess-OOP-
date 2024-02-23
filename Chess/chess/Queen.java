@@ -1,10 +1,41 @@
 package chess;
 
+import java.util.HashSet;
+
 import chess.Chess.Player;
 import chess.ReturnPlay.Message;
 
 public class Queen extends Piece{
 
+	public boolean diagonalCheck(int newFile, int newRank, String direction) {
+		String st = this.pieceFile.toString();
+		int currFile = st.charAt(0);
+		HashSet<Integer> spotSet = new HashSet<>();
+		ReturnPiece newSpot=null;
+		int spotsToCheck=0;
+		boolean fileChange=false;
+		
+		if(Math.abs(newRank-this.pieceRank) == Math.abs(newFile-(int)this.pieceFile.toString().charAt(0))){
+			if(direction.equals("leftdown")) {
+				
+			}
+			else if(direction.equals("leftup")) {
+				
+			}
+			else if(direction.equals("rightup")) {
+				System.out.println("GOOOOOD");
+			}
+			else if(direction.equals("rightdown")) {
+				
+			}
+		}
+		else {
+			
+		}
+		
+		
+		return (Boolean) null;
+	}
 	
 	public ReturnPlay move(String file, int rank) {
 		// Queen

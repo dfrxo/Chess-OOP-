@@ -20,7 +20,7 @@ public class Pawn extends Piece{
 //	PieceType pieceType;
 //	PieceFile pieceFile;
 //	int pieceRank;  // 1..8
-	//ArrayList<ReturnPiece> board = (ArrayList<ReturnPiece>)Chess.piecesOnBoard.clone();
+//  ArrayList<ReturnPiece> board = (ArrayList<ReturnPiece>)Chess.piecesOnBoard.clone();
 
 	public boolean checkCheck() {
 		return false;
@@ -70,7 +70,6 @@ public class Pawn extends Piece{
 				}
 				else if(color=='W' && Chess.enpassantPossible!=null && rank-this.pieceRank==1) {
 					updated_board_message = enpassant(newSpot,fileNumber, rank);
-					Chess.enpassantPossible = null;					
 				}
 				else {
 					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
@@ -106,7 +105,6 @@ public class Pawn extends Piece{
 				}
 				else if(color=='B' && Chess.enpassantPossible!=null && Math.abs(rank-this.pieceRank)==1) {
 					updated_board_message = enpassant(newSpot,fileNumber, rank);
-					Chess.enpassantPossible = null;		
 				}
 				else {
 					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
@@ -168,7 +166,6 @@ public class Pawn extends Piece{
 				(newRank-currRank==-1 && Math.abs(currFile-newFile)==1 && Chess.current == Player.black)) {
 			String stt = String.valueOf((char)newFile);
 			Chess.piecesOnBoard.remove(newSpot);
-			Chess.piecesOnBoard.remove(newSpot);
 			this.pieceRank = newRank;
 			this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(stt);
 		}
@@ -189,10 +186,12 @@ public class Pawn extends Piece{
 		int currFile = st.charAt(0);
 		
 		
-		if(Math.abs(newRank-currRank)==1 && Math.abs(currFile-newFile)==1) {
+
+		int x = (int)Chess.enpassantPossible.pieceFile.toString().charAt(0);
+		if(Math.abs(newRank-currRank)==1 && Math.abs(currFile-newFile)==1 && newFile == (int)Chess.enpassantPossible.pieceFile.toString().charAt(0)) {
 			String stt = String.valueOf((char)newFile);
 			Chess.piecesOnBoard.remove(Chess.enpassantPossible);
-			Chess.piecesOnBoard.remove(Chess.enpassantPossible);
+			Chess.enpassantPossible = null;		
 
 			this.pieceRank = newRank;
 			this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(stt);
