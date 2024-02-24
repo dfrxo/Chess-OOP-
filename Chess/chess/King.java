@@ -162,10 +162,8 @@ public class King extends Piece{
 		
 		
 		switch(move) {
-		case "e1 g1":
-			
+		case "e1 g1":			
 			// if(king or rook has moved): invalid move
-			
 			if(straightLineCheck(104,1,"right")) {  // 
 				rook = findNewSpot("h",1);
 				
@@ -178,10 +176,41 @@ public class King extends Piece{
 			}
 			break;
 		case "e1 c1":
+			if(straightLineCheck(97,1,"left")) {  // 
+				rook = findNewSpot("a",1);
+				
+				this.pieceFile = chess.ReturnPiece.PieceFile.valueOf("c");
+				rook.pieceFile = chess.ReturnPiece.PieceFile.valueOf("d");
+			}
+			else {
+				updated_board_message.message = Message.ILLEGAL_MOVE;
+				System.err.println("Can't castle");
+			}
 			break;
 		case "e8 g8":
+			if(straightLineCheck(104,8,"right")) {  // 
+				rook = findNewSpot("h",8);
+				
+				this.pieceFile = chess.ReturnPiece.PieceFile.valueOf("g");
+				rook.pieceFile = chess.ReturnPiece.PieceFile.valueOf("f");
+			}
+			else {
+				updated_board_message.message = Message.ILLEGAL_MOVE;
+				System.err.println("Can't castle");
+			}
 			break;
+			
 		case "e8 c8":
+			if(straightLineCheck(97,8,"left")) {  // 
+				rook = findNewSpot("a",8);
+				
+				this.pieceFile = chess.ReturnPiece.PieceFile.valueOf("c");
+				rook.pieceFile = chess.ReturnPiece.PieceFile.valueOf("d");
+			}
+			else {
+				updated_board_message.message = Message.ILLEGAL_MOVE;
+				System.err.println("Can't castle");
+			}
 			break;
 		default:
 			

@@ -1,5 +1,6 @@
 package chess;
 
+import chess.Chess.Player;
 import chess.ReturnPlay.Message; 
 public class Rook extends Piece{
 		
@@ -11,7 +12,24 @@ public class Rook extends Piece{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	public String toString() {
+		return pieceFile + String.valueOf(pieceRank);
+	}
+	
+	public ReturnPiece findNewSpot(String sf2, int pieceRank) {
+		ReturnPiece newSpot=null;
+		for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
+		{
+			ReturnPiece pc = Chess.piecesOnBoard.get(i);
+			if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == pieceRank)
+			{
+				newSpot = pc;
+				break; 
+			}
+		}
+		return newSpot;
+		
+	}
 	
 	public boolean validMove() {
 				
@@ -19,80 +37,170 @@ public class Rook extends Piece{
 		// a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
 		String piecefilestring = this.pieceFile.toString();
 		int OldfileNumber = piecefilestring.charAt(0);
+		String st = String.valueOf(this.pieceType); // CURRENT PIECE
+		char color = st.charAt(0); 					// Color of current piece
 		
 		
-		if(file.equals(piecefilestring))
-		{
-			// to check if the path is clear
-			if(this.pieceRank < rank) {
-				
-				for (int i = this.pieceRank+1; i <= rank; i++) {
-					ReturnPiece newSpot = findNewSpot(file,i);   // up until the destination
-					if (newSpot != null && newSpot.pieceRank == rank)
-					{
-						return true;
-					}
-					else if(newSpot != null)
-					{
-						return false;
-					}
-				}
-			}
-			
-			else {
-				for (int i = this.pieceRank-1; i >= rank; i--) {
-					ReturnPiece newSpot = findNewSpot(file,i);   // down until the destination
-					if (newSpot != null && newSpot.pieceRank == rank)
-					{
-						return true;
-					}
-					else if(newSpot != null)
-					{
-						return false;
-					}
-				}
-			}
-			return true;
-		} //int --> character --> string --> .valueOf PieceFile
-		
-		else if(rank == this.pieceRank)
-		{
-			// to check if the path is clear
-						if(OldfileNumber < NewfileNumber) {
-							
-							for (int i = OldfileNumber+1; i <= NewfileNumber; i++) {
-								
-								String s = String.valueOf(i);
-								ReturnPiece newSpot = findNewSpot(s, rank);   // up until the destination
-								if (newSpot != null && newSpot.pieceFile.equals(file))
-								{
-									return true;
-								}
-								else if (newSpot != null)
-								{
-									return false;
-								}
-							}
-						}
+
+		if(Chess.current == Player.white) {
+				if(file.equals(piecefilestring))
+				{
+					// to check if the path is clear vertically
+					if(this.pieceRank < rank) {
 						
-						else {
-							for (int i = OldfileNumber-1; i >= NewfileNumber; i--) {
-								String s = String.valueOf(i);
-								ReturnPiece newSpot = findNewSpot(s, rank);   // down until the destination
-								if (newSpot != null && newSpot.pieceFile.equals(file))
-								{
-									return true;
-								}
-								else if (newSpot != null)
-								{
-									return false;
-								}
+						for (int i = this.pieceRank+1; i <= rank; i++) {
+							ReturnPiece newSpot = findNewSpot(file,i);   // up until the destination
+							if (newSpot != null && newSpot.pieceRank == rank && newSpot.pieceType.toString().charAt(0) != color)
+							{
+								return true;
+							}
+							else if(newSpot == null)
+							{
+								continue;
+							}
+							
+						}
+						return false;
+						
+					}
+					
+					else {
+						for (int i = this.pieceRank-1; i >= rank; i--) {
+							ReturnPiece newSpot = findNewSpot(file,i);   // down until the destination
+							if (newSpot != null && newSpot.pieceRank == rank && newSpot.pieceType.toString().charAt(0) != color)
+							{
+								return true;
+							}
+							else if(newSpot == null)
+							{
+								continue;
 							}
 						}
-			return true;
+						return false;
+					}
+					
+				} //int --> character --> string --> .valueOf PieceFile
+				
+				else if(rank == this.pieceRank)
+				{
+					// to check if the path is clear horizontally
+								if(OldfileNumber < NewfileNumber) {
+									
+									for (int i = OldfileNumber+1; i <= NewfileNumber; i++) {
+										
+										String s = String.valueOf(i);
+										ReturnPiece newSpot = findNewSpot(s, rank);   // up until the destination
+										if (newSpot != null && newSpot.pieceFile.equals(file) && newSpot.pieceType.toString().charAt(0) != 'W')
+										{
+											return true;
+										}
+										else if (newSpot == null)
+										{
+											continue;
+										}
+									}
+									return false;
+								}
+								
+								else {
+									for (int i = OldfileNumber-1; i >= NewfileNumber; i--) {
+										String s = String.valueOf(i);
+										ReturnPiece newSpot = findNewSpot(s, rank);   // down until the destination
+										if (newSpot != null && newSpot.pieceFile.equals(file) && newSpot.pieceType.toString().charAt(0) != color)
+										{
+											return true;
+										}
+										else if (newSpot == null)
+										{
+											continue;
+										}
+									}
+									return false;
+								}
+					
+				}
+				return false;
+				
 		}
-		
-		
+		if(Chess.current == Player.black) {
+				if(file.equals(piecefilestring))
+				{
+					// to check if the path is clear vertically
+					if(this.pieceRank < rank) {
+						
+						for (int i = this.pieceRank+1; i <= rank; i++) {
+							ReturnPiece newSpot = findNewSpot(file,i);   // up until the destination
+							if (newSpot != null && newSpot.pieceRank == rank && newSpot.pieceType.toString().charAt(0) != color)
+							{
+								return true;
+							}
+							else if(newSpot == null)
+							{
+								continue;
+							}
+							
+						}
+						return false;
+						
+					}
+					
+					else {
+						for (int i = this.pieceRank-1; i >= rank; i--) {
+							ReturnPiece newSpot = findNewSpot(file,i);   // down until the destination
+							if (newSpot != null && newSpot.pieceRank == rank && newSpot.pieceType.toString().charAt(0) != color)
+							{
+								return true;
+							}
+							else if(newSpot == null)
+							{
+								continue;
+							}
+						}
+						return false;
+					}
+					
+				} //int --> character --> string --> .valueOf PieceFile
+				
+				else if(rank == this.pieceRank)
+				{
+					// to check if the path is clear horizontally
+								if(OldfileNumber < NewfileNumber) {
+									
+									for (int i = OldfileNumber+1; i <= NewfileNumber; i++) {
+										
+										String s = String.valueOf(i);
+										ReturnPiece newSpot = findNewSpot(s, rank);   // up until the destination
+										if (newSpot != null && newSpot.pieceFile.equals(file) && newSpot.pieceType.toString().charAt(0) != color)
+										{
+											return true;
+										}
+										else if (newSpot == null)
+										{
+											continue;
+										}
+									}
+									return false;
+								}
+								
+								else {
+									for (int i = OldfileNumber-1; i >= NewfileNumber; i--) {
+										String s = String.valueOf(i);
+										ReturnPiece newSpot = findNewSpot(s, rank);   // down until the destination
+										if (newSpot != null && newSpot.pieceFile.equals(file) && newSpot.pieceType.toString().charAt(0) != color)
+										{
+											return true;
+										}
+										else if (newSpot == null)
+										{
+											continue;
+										}
+									}
+									return false;
+								}
+					
+				}
+				return false;
+		}
 		return false;
 	}
 
@@ -112,32 +220,32 @@ public class Rook extends Piece{
 		
 		if (!isValid) {
 			updated_board_message.message = Message.ILLEGAL_MOVE;
+			updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 			return updated_board_message;
 		}
 		
-		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 		ReturnPiece newSpot = null;
 		// Searches for where we're moving it to    -  We need to put this in each piece class	
 				for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
 				{
-					ReturnPiece pc = updated_board_message.piecesOnBoard.get(i);
+					ReturnPiece pc = Chess.piecesOnBoard.get(i);
 					if (pc.pieceFile.toString().equals(file) && pc.pieceRank == rank)
 					{
 						newSpot = pc;
 						break; 
 					}
 				}
-		updated_board_message.piecesOnBoard.remove(newSpot);
+				
+		
+		Chess.piecesOnBoard.remove(newSpot);
 		this.pieceRank = rank;
 		this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
+		if(updated_board_message.message==null) {
+			Chess.changePlayer();
+		}
+		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 		return updated_board_message;
 		
-	}
-
-	@Override
-	public ReturnPiece findNewSpot(String newSpot, int newFile) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

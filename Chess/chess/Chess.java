@@ -46,6 +46,10 @@ public class Chess {
 	static Player current;
 	
 	static ReturnPiece enpassantPossible=null;
+	static boolean blackLeftCastle=true;
+	static boolean whiteLeftCastle=true;
+	static boolean blackRightCastle=true;
+	static boolean leftRightCastle=true;
 
 	
 	/**
