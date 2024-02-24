@@ -187,7 +187,6 @@ public class Pawn extends Piece{
 		
 		
 
-		int x = (int)Chess.enpassantPossible.pieceFile.toString().charAt(0);
 		if(Math.abs(newRank-currRank)==1 && Math.abs(currFile-newFile)==1 && newFile == (int)Chess.enpassantPossible.pieceFile.toString().charAt(0)) {
 			String stt = String.valueOf((char)newFile);
 			Chess.piecesOnBoard.remove(Chess.enpassantPossible);

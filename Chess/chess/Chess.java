@@ -129,18 +129,20 @@ public class Chess {
 			msg = ((Knight) thePiece).move(sf2, finalRank);
 
 		} 
-		//else if (thePiece instanceof Bishop) {
-		//	
-		//}
+		else if (thePiece instanceof Bishop) {
+			msg = ((Bishop) thePiece).move(sf2, finalRank);
+
+		}
 		else if (thePiece instanceof Rook) {
 			msg = ((Rook) thePiece).move(sf2, finalRank);
 		}
 		else if (thePiece instanceof Queen) {
 			msg = ((Queen) thePiece).move(sf2, finalRank);
 		} 
-//		else if (thePiece instanceof King) {
-//		
-//		}
+		else if (thePiece instanceof King) {
+			msg = ((King) thePiece).move(sf2, finalRank);
+
+		}
 //		else {
 		// Code to execute if thePiece does not match any of the above
 //		}
@@ -210,24 +212,26 @@ public class Chess {
 		bN2.pieceType = chess.ReturnPiece.PieceType.BN;
 
 		// Initialize black bishops
-		ReturnPiece bB1 = new ReturnPiece();
+		ReturnPiece bB1 = new Bishop();
 		bB1.pieceFile = chess.ReturnPiece.PieceFile.c;
 		bB1.pieceRank = 8;
 		bB1.pieceType = chess.ReturnPiece.PieceType.BB;
 
-		ReturnPiece bB2 = new ReturnPiece();
+		ReturnPiece bB2 = new Bishop();
 		bB2.pieceFile = chess.ReturnPiece.PieceFile.f;
 		bB2.pieceRank = 8;
 		bB2.pieceType = chess.ReturnPiece.PieceType.BB;
 
 		// Initialize black queen
 		ReturnPiece bQ = new Queen();
-		bQ.pieceFile = chess.ReturnPiece.PieceFile.d;
-		bQ.pieceRank = 8;
+	//	bQ.pieceFile = chess.ReturnPiece.PieceFile.d;
+		bQ.pieceFile = chess.ReturnPiece.PieceFile.e;
+	//	bQ.pieceRank = 8;
+		bQ.pieceRank = 6;
 		bQ.pieceType = chess.ReturnPiece.PieceType.BQ;
 
 		// Initialize black king
-		ReturnPiece bK = new ReturnPiece();
+		ReturnPiece bK = new King();
 		bK.pieceFile = chess.ReturnPiece.PieceFile.e;
 		bK.pieceRank = 8;
 		bK.pieceType = chess.ReturnPiece.PieceType.BK;
@@ -303,12 +307,12 @@ public class Chess {
 		wN2.pieceType = chess.ReturnPiece.PieceType.WN;
 
 		// Initialize black bishops
-		ReturnPiece wB1 = new ReturnPiece();
+		ReturnPiece wB1 = new Bishop();
 		wB1.pieceFile = chess.ReturnPiece.PieceFile.c;
 		wB1.pieceRank = 1;
 		wB1.pieceType = chess.ReturnPiece.PieceType.WB;
 
-		ReturnPiece wB2 = new ReturnPiece();
+		ReturnPiece wB2 = new Bishop();
 		wB2.pieceFile = chess.ReturnPiece.PieceFile.f;
 		wB2.pieceRank = 1;
 		wB2.pieceType = chess.ReturnPiece.PieceType.WB;
@@ -316,11 +320,11 @@ public class Chess {
 		// Initialize black queen
 		ReturnPiece wQ = new Queen();
 		wQ.pieceFile = chess.ReturnPiece.PieceFile.d;
-		wQ.pieceRank = 1;
+		wQ.pieceRank = 5;
 		wQ.pieceType = chess.ReturnPiece.PieceType.WQ;
 
 		// Initialize black king
-		ReturnPiece wK = new ReturnPiece();
+		ReturnPiece wK = new King();
 		wK.pieceFile = chess.ReturnPiece.PieceFile.e;
 		wK.pieceRank = 1;
 		wK.pieceType = chess.ReturnPiece.PieceType.WK;
