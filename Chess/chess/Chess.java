@@ -299,22 +299,26 @@ public class Chess {
 		ReturnPiece wN1 = new Knight();
 		wN1.pieceFile = chess.ReturnPiece.PieceFile.b;
 		wN1.pieceRank = 1;
+		wN1.pieceRank = 3;
 		wN1.pieceType = chess.ReturnPiece.PieceType.WN;
 
 		ReturnPiece wN2 = new Knight();
 		wN2.pieceFile = chess.ReturnPiece.PieceFile.g;
 		wN2.pieceRank = 1;
+		wN2.pieceRank = 4;
 		wN2.pieceType = chess.ReturnPiece.PieceType.WN;
 
 		// Initialize black bishops
 		ReturnPiece wB1 = new Bishop();
 		wB1.pieceFile = chess.ReturnPiece.PieceFile.c;
-		wB1.pieceRank = 1;
+		//wB1.pieceRank = 1;
+		wB1.pieceRank = 3;
 		wB1.pieceType = chess.ReturnPiece.PieceType.WB;
 
 		ReturnPiece wB2 = new Bishop();
 		wB2.pieceFile = chess.ReturnPiece.PieceFile.f;
-		wB2.pieceRank = 1;
+//		wB2.pieceRank = 1;
+		wB2.pieceRank = 3;
 		wB2.pieceType = chess.ReturnPiece.PieceType.WB;
 
 		// Initialize black queen

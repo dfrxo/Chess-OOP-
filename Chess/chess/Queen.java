@@ -32,8 +32,7 @@ public class Queen extends Piece{
 		if(Chess.current == Player.white) { // White piece.   // Chess.current is the current player's turn
 			if(newSpot==null) {
 				if(color == 'W') {
-					if((currFileNumber == newFileNumber)) {  // if 'h' == 'h' (104==104)
-						
+					if((currFileNumber == newFileNumber)) {  // if 'h' == 'h' (104==104)						
 						// Check each spot till you reach the new spot						
 						if(rank>this.pieceRank) {
 							if(!straightLineCheck(newFileNumber,rank,"up")) {
@@ -55,8 +54,6 @@ public class Queen extends Piece{
 								this.pieceRank = rank;									
 							}
 						}
-						
-						//updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 					}
 					else if((this.pieceRank==rank)) {
 						if(currFileNumber>newFileNumber) {
@@ -78,11 +75,8 @@ public class Queen extends Piece{
 								this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
 								this.pieceRank = rank;									
 							}
-						}
-						
-						//updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+						}						
 					}
-					/// new code for diagonal
 					else if(currFileNumber>newFileNumber) {
 						if(rank<this.pieceRank) {
 							if(!diagonalCheck(newFileNumber,rank,"leftdown")) {
@@ -143,10 +137,8 @@ public class Queen extends Piece{
 				}
 				else {
 					System.err.println("You tried to move the wrong color piece :(");
-					//updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 					updated_board_message.message = ReturnPlay.Message.ILLEGAL_MOVE;
-				}
-				
+				}				
 			}
 			else if(newSpot.pieceType.toString().toLowerCase().charAt(0) == Chess.current.toString().charAt(0)) {   // Checks if eating own piece
 				System.err.println("You tried to eat your own color piece.");
