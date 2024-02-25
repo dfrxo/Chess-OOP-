@@ -16,6 +16,7 @@ public class King extends Piece{
 		// file and rank are the position of the potential new piece location
 		// so h2 to ---h4---
 		int currFileNumber = (int)this.pieceFile.toString().charAt(0);
+		populateMoves();
 
 		ReturnPiece newSpot = findNewSpot(file,rank);   // Finds the new spot
 		chess.ReturnPlay updated_board_message = new chess.ReturnPlay(); // New board to be updated
@@ -27,6 +28,13 @@ public class King extends Piece{
 		
 		String originalMove = this.pieceFile.toString()+this.pieceRank + " "+ file+rank;
 		
+		
+		//// WRITE CODE FOR KING PUTTING ITSELF IN CHECk
+		///  CAN I MAKE IT SO THE KING CHECKS ALL POTENTIAL MOVES, 
+		// IF THE POTENTIAL MOVE IS IN POTENTIAL MOVES HASHSET, RETURN MESSAGE
+		// 
+		// ALSO FOR CHECK. DO THE MOVE, THEN CHECK POTENTIAL MOVES OF ALL OTHER PIECES. IF THE 
+		// PIECE THE KING IS ON IS IN THE POTENTIAL MOVES, YOU'RE IN CHECK.
 		
 		
 		if(Chess.current == Player.white) {			
@@ -235,5 +243,31 @@ public class King extends Piece{
 		
 		
 		return updated_board_message;
+	}
+
+	@Override
+	void populateMoves() {
+		if(Chess.current.toString().charAt(0)!=pieceType.toString().toLowerCase().charAt(0)) {
+			String st = this.pieceFile.toString();
+			int x = st.charAt(0);
+			int y = pieceRank;
+			int tempx;
+			int tempy;
+			ReturnPiece newSpot=null; 
+			for(tempx = x-1;tempx<x+2;tempx++) {
+				for(tempy = y-1;tempy<y+2;tempy++) {
+					newSpot = findNewSpot(String.valueOf((char)(tempx)),tempy);
+					if(newSpot!=null && tempy!=y && tempx !=x) {
+						if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+							Piece.potentialMoves.add((tempx + " " + tempy).trim());
+						}
+						break;
+					}
+					Piece.potentialMoves.add((tempx + " " + tempy).trim());
+				}
+			}
+		}
+		System.out.println(Piece.potentialMoves);
+
 	}
 }

@@ -249,7 +249,8 @@ public class Chess {
 	}
 	public static void start() {		
 		ReturnPiece bR1 = new Rook(ReturnPiece.PieceFile.a, 8, ReturnPiece.PieceType.BR);
-		ReturnPiece bR2 = new Rook(ReturnPiece.PieceFile.h, 8, ReturnPiece.PieceType.BR);
+//		ReturnPiece bR2 = new Rook(ReturnPiece.PieceFile.h, 8, ReturnPiece.PieceType.BR);
+		ReturnPiece bR2 = new Rook(ReturnPiece.PieceFile.d, 5, ReturnPiece.PieceType.BR);
 		
 		ReturnPiece bN1 = new Knight(ReturnPiece.PieceFile.b, 8, ReturnPiece.PieceType.BN);
 		ReturnPiece bN2 = new Knight(ReturnPiece.PieceFile.g, 8, ReturnPiece.PieceType.BN);
@@ -263,7 +264,8 @@ public class Chess {
 		ReturnPiece bP1= new Pawn(ReturnPiece.PieceFile.a, 3, ReturnPiece.PieceType.BP);
 		ReturnPiece bP2= new Pawn(ReturnPiece.PieceFile.b, 7, ReturnPiece.PieceType.BP);
 		ReturnPiece bP3= new Pawn(ReturnPiece.PieceFile.c, 7, ReturnPiece.PieceType.BP);
-		ReturnPiece bP4= new Pawn(ReturnPiece.PieceFile.e, 7, ReturnPiece.PieceType.BP);
+//		ReturnPiece bP4= new Pawn(ReturnPiece.PieceFile.e, 7, ReturnPiece.PieceType.BP);
+//		ReturnPiece bP4= new Pawn(ReturnPiece.PieceFile.e, 5, ReturnPiece.PieceType.BP);
 		ReturnPiece bP5= new Pawn(ReturnPiece.PieceFile.f, 7, ReturnPiece.PieceType.BP);
 		ReturnPiece bP6= new Pawn(ReturnPiece.PieceFile.g, 7, ReturnPiece.PieceType.BP);
 		ReturnPiece bP7= new Pawn(ReturnPiece.PieceFile.h, 7, ReturnPiece.PieceType.BP);
@@ -272,20 +274,24 @@ public class Chess {
 		ReturnPiece wP1= new Pawn(ReturnPiece.PieceFile.a, 2, ReturnPiece.PieceType.WP);
 		ReturnPiece wP2= new Pawn(ReturnPiece.PieceFile.b, 2, ReturnPiece.PieceType.WP);
 		ReturnPiece wP3= new Pawn(ReturnPiece.PieceFile.c, 2, ReturnPiece.PieceType.WP);
-		ReturnPiece wP4= new Pawn(ReturnPiece.PieceFile.e, 2, ReturnPiece.PieceType.WP);
+		//ReturnPiece wP4= new Pawn(ReturnPiece.PieceFile.e, 2, ReturnPiece.PieceType.WP);
 		ReturnPiece wP5= new Pawn(ReturnPiece.PieceFile.f, 2, ReturnPiece.PieceType.WP);
 		ReturnPiece wP6= new Pawn(ReturnPiece.PieceFile.g, 2, ReturnPiece.PieceType.WP);
-		ReturnPiece wP7= new Pawn(ReturnPiece.PieceFile.h, 2, ReturnPiece.PieceType.WP);
-		ReturnPiece wP8= new Pawn(ReturnPiece.PieceFile.h, 2, ReturnPiece.PieceType.WP);
+		//ReturnPiece wP7= new Pawn(ReturnPiece.PieceFile.h, 2, ReturnPiece.PieceType.WP);
+		//ReturnPiece wP8= new Pawn(ReturnPiece.PieceFile.h, 2, ReturnPiece.PieceType.WP);
 
 		ReturnPiece wR1= new Rook(ReturnPiece.PieceFile.a, 1, ReturnPiece.PieceType.WR);
 		ReturnPiece wR2= new Rook(ReturnPiece.PieceFile.h, 1, ReturnPiece.PieceType.WR);
-		ReturnPiece wN1= new Knight(ReturnPiece.PieceFile.b, 1, ReturnPiece.PieceType.WN);
+//		ReturnPiece wN1= new Knight(ReturnPiece.PieceFile.b, 1, ReturnPiece.PieceType.WN);
+		ReturnPiece wN1= new Knight(ReturnPiece.PieceFile.d, 4, ReturnPiece.PieceType.WN);
 		ReturnPiece wN2= new Knight(ReturnPiece.PieceFile.g, 1, ReturnPiece.PieceType.WN);
-		ReturnPiece wB1= new Bishop(ReturnPiece.PieceFile.c, 1, ReturnPiece.PieceType.WB);
+//		ReturnPiece wB1= new Bishop(ReturnPiece.PieceFile.c, 1, ReturnPiece.PieceType.WB);
+		ReturnPiece wB1= new Bishop(ReturnPiece.PieceFile.d, 4, ReturnPiece.PieceType.WB);
 		ReturnPiece wB2= new Bishop(ReturnPiece.PieceFile.f, 1, ReturnPiece.PieceType.WB);
-		ReturnPiece wQ= new Queen(ReturnPiece.PieceFile.d, 1, ReturnPiece.PieceType.WQ);
-		ReturnPiece wK= new King(ReturnPiece.PieceFile.e, 1, ReturnPiece.PieceType.WK);
+//		ReturnPiece wQ= new Queen(ReturnPiece.PieceFile.d, 1, ReturnPiece.PieceType.WQ);
+		ReturnPiece wQ= new Queen(ReturnPiece.PieceFile.e, 3, ReturnPiece.PieceType.WQ);
+//		ReturnPiece wK= new King(ReturnPiece.PieceFile.e, 1, ReturnPiece.PieceType.WK);
+		ReturnPiece wK= new King(ReturnPiece.PieceFile.b, 5, ReturnPiece.PieceType.WK);
 
 		Chess.piecesOnBoard.add(bN1);
 		Chess.piecesOnBoard.add(bN2);
@@ -307,16 +313,16 @@ public class Chess {
 		Chess.piecesOnBoard.add(wP1);
 		Chess.piecesOnBoard.add(wP2);
 		Chess.piecesOnBoard.add(wP3);
-		Chess.piecesOnBoard.add(wP4);
+		//Chess.piecesOnBoard.add(wP4);
 		Chess.piecesOnBoard.add(wP5);
 		Chess.piecesOnBoard.add(wP6);
-		Chess.piecesOnBoard.add(wP7);
+	//	Chess.piecesOnBoard.add(wP7);
 		//Chess.piecesOnBoard.add(wP8);
 		
 		Chess.piecesOnBoard.add(bP1);
 		Chess.piecesOnBoard.add(bP2);
 		Chess.piecesOnBoard.add(bP3);
-		Chess.piecesOnBoard.add(bP4);
+	//	Chess.piecesOnBoard.add(bP4);
 		Chess.piecesOnBoard.add(bP5);
 		Chess.piecesOnBoard.add(bP6);
 		Chess.piecesOnBoard.add(bP7);

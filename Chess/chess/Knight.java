@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 import chess.Chess.Player;
 import chess.ReturnPlay.Message;
@@ -18,10 +19,7 @@ public class Knight extends Piece{
         this.pieceRank = pieceRank;
         this.pieceType = pieceType;
     }
-	public boolean checkCheck() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 
 	public boolean validMove() {
 		// TODO Auto-generated method stub
@@ -30,7 +28,8 @@ public class Knight extends Piece{
 
 	public ReturnPlay move(String file, int rank) {
 		// File and Rank are the location of the NEWSPOT. 
-		
+		populateMoves();
+
 		int fileNumber = file.charAt(0);  // Used to put a numeric value on FILE 
 											// a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
 		ReturnPiece newSpot = findNewSpot(file,rank);   // Finds the new spot
@@ -144,6 +143,46 @@ public class Knight extends Piece{
 		
 		
 		return updated_board_message;
+	}
+	@Override
+	void populateMoves() {
+		String st = this.pieceFile.toString();
+		int x = st.charAt(0);
+		int y = pieceRank;
+		ReturnPiece newSpot=null;  
+		HashSet<String> tempSet = new HashSet<>();
+		String[] ez;
+		String tempx;
+		String tempy;
+		 // a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
+		// 100 - 4
+		// BOUNDARY OF BOARD 
+		// 97 - 104          1 - 8
+		// SLOPPY CODE, ADDING PIECES OFF THE BOARD.... Maybe doesn't matter
+		tempSet.add((x-1)+" "+(y+2));
+		tempSet.add((x-2)+" "+(y+1));
+		tempSet.add((x+1)+" "+(y+2));
+		tempSet.add((x-2)+" "+(y-1));
+		tempSet.add((x-1)+" "+(y-2));
+		tempSet.add((x+1)+" "+(y-2));
+		tempSet.add((x+2)+" "+(y-1));
+		tempSet.add((x+2)+" "+(y+1));
+		
+		for(String s: tempSet) {
+			ez = s.split(" ");
+			tempx = ez[0];
+			tempy = ez[1];
+			
+			newSpot = findNewSpot(tempx,Integer.parseInt(tempy));
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(tempx + " " + tempy);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(tempx + " " + tempy);
+		}
+		System.out.println(Piece.potentialMoves);
 	}
 
 }

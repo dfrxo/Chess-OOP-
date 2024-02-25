@@ -15,7 +15,7 @@ public class Bishop extends Piece{
 		// TODO Auto-generated method stub
 		int newFileNumber = file.charAt(0);
 		int currFileNumber = (int)this.pieceFile.toString().charAt(0);
-
+		populateMoves();
 		ReturnPiece newSpot = findNewSpot(file,rank);   // Finds the new spot
 		chess.ReturnPlay updated_board_message = new chess.ReturnPlay(); // New board to be updated
 		String st = String.valueOf(this.pieceType); // CURRENT PIECE
@@ -278,6 +278,72 @@ public class Bishop extends Piece{
 		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 		
 		return updated_board_message;
+	}
+
+	@Override
+	public void populateMoves() {
+		String st = this.pieceFile.toString();
+		int x = st.charAt(0);
+		int y = pieceRank;
+		ReturnPiece newSpot=null;  
+		 // a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
+		
+		// BOUNDARY OF BOARD 
+		// 97 - 104          1 - 8
+		int temp;
+		int tempy = y+1;
+		for(temp = x+1;temp<105 && tempy<9;temp++) {   // UP RIGHT
+			newSpot = findNewSpot(String.valueOf((char)(temp)),tempy);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(temp + " " + tempy);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(temp + " " + tempy);
+			tempy++;
+		}
+		tempy = y+1;
+		for(temp = x-1;temp>96 && tempy<9;temp--) { // UP LEFT
+			newSpot = findNewSpot(String.valueOf((char)(temp)),tempy);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(temp + " " + tempy);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(temp + " " + tempy);
+			tempy++;
+		}
+		tempy=y-1;
+		for(temp = x-1;temp>96 && tempy>0;temp--) { // DOWN LEFT
+			newSpot = findNewSpot(String.valueOf((char)(temp)),tempy);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(temp + " " + tempy);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(temp + " " + tempy);
+			tempy--;
+		}
+		tempy=y-1;
+		for(temp = x+1;temp<105 && tempy>0;temp++) { // DOWN RIGHT
+			newSpot = findNewSpot(String.valueOf((char)(temp)),tempy);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(temp + " " + tempy);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(temp + " " + tempy);
+			tempy--;
+		}
+		
+		
+		System.out.println(Piece.potentialMoves);
+		
+		
 	}
 
 }

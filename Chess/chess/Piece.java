@@ -3,12 +3,44 @@ package chess;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import chess.Chess.Player;
+
 public abstract class Piece extends ReturnPiece{
-	
-	public boolean checkCheck(){
-		// there's more to come..
+	public static HashSet<String> potentialMoves = new HashSet<>();
+	public static boolean checkCheck(){		
+		ReturnPiece newSpot=null;
+		
+		if(Chess.current==Player.white) {
+			for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
+			{
+				ReturnPiece pc = Chess.piecesOnBoard.get(i);
+				if (pc.pieceType==PieceType.WB)
+				{
+					newSpot = pc;
+					break; 
+				}
+			}
+			
+			
+		}
+		else {
+			for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
+			{
+				ReturnPiece pc = Chess.piecesOnBoard.get(i);
+				if (pc.pieceType==PieceType.BB)
+				{
+					newSpot = pc;
+					break; 
+				}
+			}
+		}
+		
+		
+		
 		return false;
 	}
+	
+	abstract void populateMoves();
 	
     abstract ReturnPlay move(String file, int rank);
 

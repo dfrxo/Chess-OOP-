@@ -21,9 +21,7 @@ public class Pawn extends Piece{
 		this.pieceRank = pieceRank;
 		this.pieceType = pieceType;
 	}
-	public boolean checkCheck() {
-		return false;
-	}
+
 	public String toString() {
 		return pieceFile + String.valueOf(pieceRank);
 	}
@@ -39,7 +37,8 @@ public class Pawn extends Piece{
 	public ReturnPlay move(String file, int rank) {
 		System.out.println();
 		int fileNumber = file.charAt(0);  // Used to put a numeric value on FILE 
-												// a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
+		populateMoves();
+		// a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
 		// file and rank are the position of the potential new piece location
 		// so h2 to ---h4---
 		
@@ -218,6 +217,25 @@ public class Pawn extends Piece{
 
 		return updated_board_message;
 	}
+	@Override
+	public void populateMoves() {
+		String st = this.pieceFile.toString();
+		int x = st.charAt(0);
+		int y = pieceRank;
+		ReturnPiece newSpot=null;  
+		
+		if(this.pieceType==PieceType.WP) {
+			Piece.potentialMoves.add(x-1 + " " + (y+1));
+			Piece.potentialMoves.add(x+1 + " " + (y+1));
+		}
+		else {
+			Piece.potentialMoves.add((x-1) + " " + (y-1));
+			Piece.potentialMoves.add((x+1) + " " + (y-1));
+		}
+		System.out.println(Piece.potentialMoves);
+
+	}
+	
 }
 
 

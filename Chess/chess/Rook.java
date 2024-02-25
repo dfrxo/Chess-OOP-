@@ -14,10 +14,7 @@ public class Rook extends Piece{
         this.pieceType = pieceType;
     }
 	@Override
-	public boolean checkCheck() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 	public String toString() {
 		return pieceFile + String.valueOf(pieceRank);
 	}
@@ -253,6 +250,7 @@ public class Rook extends Piece{
 		this.file = file;
 		this.rank = rank;
 		System.out.println();
+		populateMoves();
 		
 		// file and rank are the position of the potential new piece location
 		// so h2 to ---h4---
@@ -324,6 +322,58 @@ public class Rook extends Piece{
 	public ReturnPlay eatThePiece(ReturnPiece eatThePiece, int rank) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public void populateMoves() {
+		String st = this.pieceFile.toString();
+		int x = st.charAt(0);
+		int y = pieceRank;
+		ReturnPiece newSpot=null;  
+		int temp;
+		int tempy;
+		
+		for(tempy = y+1; tempy<9;tempy++) { // UP
+			newSpot = findNewSpot(String.valueOf((char)(x)),tempy);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(x + " " + tempy);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(x + " " + tempy);
+		}
+		for(tempy = y-1; tempy>0;tempy--) { // DOWN
+			newSpot = findNewSpot(String.valueOf((char)(x)),tempy);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(x + " " + tempy);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(x + " " + tempy);
+		}
+		for(temp = x-1; temp>96;temp--) { // LEFT
+			newSpot = findNewSpot(String.valueOf((char)(temp)),y);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(temp + " " + y);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(temp + " " + y);
+		}
+		for(temp = x+1; temp<105;temp++) { // RIGHT
+			newSpot = findNewSpot(String.valueOf((char)(temp)),y);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(temp + " " + y);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(temp + " " + y);
+		}
+		
+		System.out.println(Piece.potentialMoves);
 	}
 
 }

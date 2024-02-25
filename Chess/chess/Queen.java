@@ -21,7 +21,8 @@ public class Queen extends Piece{
 		// file and rank are the position of the potential new piece location
 		// so h2 to ---h4---
 		int currFileNumber = (int)this.pieceFile.toString().charAt(0);
-		
+		populateMoves();
+
 		
 		ReturnPiece newSpot = findNewSpot(file,rank);   // Finds the new spot
 		chess.ReturnPlay updated_board_message = new chess.ReturnPlay(); // New board to be updated
@@ -494,6 +495,110 @@ public class Queen extends Piece{
 		
 		return updated_board_message;
 	}
+
+	@Override
+	public void populateMoves() {
+		String st = this.pieceFile.toString();
+		int x = st.charAt(0);
+		int y = pieceRank;
+		ReturnPiece newSpot=null;  
+		 // a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
+		
+		// BOUNDARY OF BOARD 
+		// 97 - 104          1 - 8
+		int temp;
+		int tempy = y+1;
+		for(temp = x+1;temp<105 && tempy<9;temp++) {   // UP RIGHT
+			newSpot = findNewSpot(String.valueOf((char)(temp)),tempy);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(temp + " " + tempy);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(temp + " " + tempy);
+			tempy++;
+		}
+		tempy = y+1;
+		for(temp = x-1;temp>96 && tempy<9;temp--) { // UP LEFT
+			newSpot = findNewSpot(String.valueOf((char)(temp)),tempy);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(temp + " " + tempy);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(temp + " " + tempy);
+			tempy++;
+		}
+		tempy=y-1;
+		for(temp = x-1;temp>96 && tempy>0;temp--) { // DOWN LEFT
+			newSpot = findNewSpot(String.valueOf((char)(temp)),tempy);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(temp + " " + tempy);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(temp + " " + tempy);
+			tempy--;
+		}
+		tempy=y-1;
+		for(temp = x+1;temp<105 && tempy>0;temp++) { // DOWN RIGHT
+			newSpot = findNewSpot(String.valueOf((char)(temp)),tempy);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(temp + " " + tempy);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(temp + " " + tempy);
+			tempy--;
+		}	
+		for(tempy = y+1; tempy<9;tempy++) { // UP
+			newSpot = findNewSpot(String.valueOf((char)(x)),tempy);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(x + " " + tempy);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(x + " " + tempy);
+		}
+		for(tempy = y-1; tempy>0;tempy--) { // DOWN
+			newSpot = findNewSpot(String.valueOf((char)(x)),tempy);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(x + " " + tempy);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(x + " " + tempy);
+		}
+		for(temp = x-1; temp>96;temp--) { // LEFT
+			newSpot = findNewSpot(String.valueOf((char)(temp)),y);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(temp + " " + y);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(temp + " " + y);
+		}
+		for(temp = x+1; temp<105;temp++) { // RIGHT
+			newSpot = findNewSpot(String.valueOf((char)(temp)),y);
+			if(newSpot!=null) {
+				if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+					Piece.potentialMoves.add(temp + " " + y);
+				}
+				break;
+			}
+			Piece.potentialMoves.add(temp + " " + y);
+		}
+		System.out.println(Piece.potentialMoves);
+
+	}
+	
 
 
 }
