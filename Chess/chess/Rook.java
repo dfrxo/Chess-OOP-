@@ -1,6 +1,7 @@
 package chess;
 
 import chess.Chess.Player;
+import chess.ReturnPiece.PieceFile;
 import chess.ReturnPlay.Message; 
 public class Rook extends Piece{
 		
@@ -42,8 +43,6 @@ public class Rook extends Piece{
 		int OldfileNumber = piecefilestring.charAt(0);
 		String st = String.valueOf(this.pieceType); // CURRENT PIECE
 		char color = st.charAt(0); 					// Color of current piece
-		
-		
 
 		if(Chess.current == Player.white) {
 				if(file.equals(piecefilestring))
@@ -250,7 +249,8 @@ public class Rook extends Piece{
 		this.file = file;
 		this.rank = rank;
 		System.out.println();
-		populateMoves();
+		PieceFile originalFile = this.pieceFile;
+		int originalRank = this.pieceRank;
 		
 		// file and rank are the position of the potential new piece location
 		// so h2 to ---h4---
@@ -310,10 +310,18 @@ public class Rook extends Piece{
 		Chess.piecesOnBoard.remove(newSpot);
 		this.pieceRank = rank;
 		this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
-		if(updated_board_message.message==null) {
-			Chess.changePlayer();
-		}
+		
 		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
+
+		// NEED TO FIX CASTLING IF THIS ACTIVATES
+		if(Chess.checkChecker(updated_board_message, color)) {
+			this.pieceFile = originalFile;
+			this.pieceRank = originalRank;
+			
+			if(newSpot!=null) {
+				Chess.piecesOnBoard.add(newSpot);
+			}
+		}
 		return updated_board_message;
 		
 	}
@@ -373,7 +381,6 @@ public class Rook extends Piece{
 			Piece.potentialMoves.add(temp + " " + y);
 		}
 		
-		System.out.println(Piece.potentialMoves);
 	}
 
 }

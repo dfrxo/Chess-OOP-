@@ -1,6 +1,7 @@
 package chess;
 
 import chess.Chess.Player;
+import chess.ReturnPiece.PieceFile;
 import chess.ReturnPlay.Message;
 
 public class King extends Piece{
@@ -16,8 +17,10 @@ public class King extends Piece{
 		// file and rank are the position of the potential new piece location
 		// so h2 to ---h4---
 		int currFileNumber = (int)this.pieceFile.toString().charAt(0);
-		populateMoves();
 
+		PieceFile originalFile = this.pieceFile;
+		int originalRank = this.pieceRank;
+		
 		ReturnPiece newSpot = findNewSpot(file,rank);   // Finds the new spot
 		chess.ReturnPlay updated_board_message = new chess.ReturnPlay(); // New board to be updated
 		String st = String.valueOf(this.pieceType); // CURRENT PIECE
@@ -133,11 +136,28 @@ public class King extends Piece{
 				}
 			}
 		}
+		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 		
+//		if(updated_board_message.message==null) {
+//			if(Chess.checkChecker(updated_board_message, color)) {
+//				this.pieceFile = originalFile;
+//				this.pieceRank = originalRank;
+//				
+//				if(newSpot!=null) {
+//					Chess.piecesOnBoard.add(newSpot);
+//				}
+//				
+//				updated_board_message.message = Message.ILLEGAL_MOVE;
+//				System.err.println("This move would put you in check.");
+//				
+//			}
+//			else {
+//			Chess.changePlayer();
+//			}
+//		}
 		if(updated_board_message.message==null) {
 			Chess.changePlayer();
 		}
-		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 		
 		return updated_board_message;
 	}
@@ -247,7 +267,7 @@ public class King extends Piece{
 
 	@Override
 	void populateMoves() {
-		if(Chess.current.toString().charAt(0)!=pieceType.toString().toLowerCase().charAt(0)) {
+//		if(0==0) {
 			String st = this.pieceFile.toString();
 			int x = st.charAt(0);
 			int y = pieceRank;
@@ -265,9 +285,30 @@ public class King extends Piece{
 					}
 					Piece.potentialMoves.add((tempx + " " + tempy).trim());
 				}
-			}
+	//		}
 		}
-		System.out.println(Piece.potentialMoves);
+	}
+	void populateMovesCheckMate() {
+//		if(0==0) {
+			String st = this.pieceFile.toString();
+			int x = st.charAt(0);
+			int y = pieceRank;
+			int tempx;
+			int tempy;
+			ReturnPiece newSpot=null; 
+			for(tempx = x-1;tempx<x+2;tempx++) {
+				for(tempy = y-1;tempy<y+2;tempy++) {
+					newSpot = findNewSpot(String.valueOf((char)(tempx)),tempy);
+					if(newSpot!=null && tempy!=y && tempx !=x) {
+						if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
+							Piece.potentialMoves.add((tempx + " " + tempy).trim());
+						}
+						break;
+					}
+					Piece.potentialMoves.add((tempx + " " + tempy).trim());
+				}
+	//		}
+		}
 
 	}
 }

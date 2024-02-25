@@ -1,6 +1,7 @@
 package chess;
 
 import chess.Chess.Player;
+import chess.ReturnPiece.PieceFile;
 import chess.ReturnPlay.Message;
 
 public class Bishop extends Piece{
@@ -15,11 +16,13 @@ public class Bishop extends Piece{
 		// TODO Auto-generated method stub
 		int newFileNumber = file.charAt(0);
 		int currFileNumber = (int)this.pieceFile.toString().charAt(0);
-		populateMoves();
 		ReturnPiece newSpot = findNewSpot(file,rank);   // Finds the new spot
 		chess.ReturnPlay updated_board_message = new chess.ReturnPlay(); // New board to be updated
 		String st = String.valueOf(this.pieceType); // CURRENT PIECE
 		char color = st.charAt(0); 					// Color of current piece
+		
+		PieceFile originalFile = this.pieceFile;
+		int originalRank = this.pieceRank;
 		
 		if(Math.abs(rank-this.pieceRank) == Math.abs(newFileNumber-currFileNumber)) {
 			if(Chess.current == Player.white) { // White piece.   // Chess.current is the current player's turn
@@ -239,12 +242,25 @@ public class Bishop extends Piece{
 			updated_board_message.message = Message.ILLEGAL_MOVE;
 			System.err.println("No teleporting");
 		}
-
+		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 		if(updated_board_message.message==null) {
+			if(Chess.checkChecker(updated_board_message, color)) {
+				this.pieceFile = originalFile;
+				this.pieceRank = originalRank;
+				
+				if(newSpot!=null) {
+					Chess.piecesOnBoard.add(newSpot);
+				}
+				
+				updated_board_message.message = Message.ILLEGAL_MOVE;
+				System.err.println("This move would put you in check.");
+				
+			}
+			else {
 			Chess.changePlayer();
+			}
 		}
 		
-		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 		return updated_board_message;
 	}
 

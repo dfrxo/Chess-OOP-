@@ -37,10 +37,12 @@ public class Pawn extends Piece{
 	public ReturnPlay move(String file, int rank) {
 		System.out.println();
 		int fileNumber = file.charAt(0);  // Used to put a numeric value on FILE 
-		populateMoves();
 		// a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
 		// file and rank are the position of the potential new piece location
 		// so h2 to ---h4---
+		
+		PieceFile originalFile = this.pieceFile;
+		int originalRank = this.pieceRank;
 		
 		ReturnPiece newSpot = findNewSpot(file,rank);   // Finds the new spot
 		chess.ReturnPlay updated_board_message = new chess.ReturnPlay(); // New board to be updated
@@ -123,15 +125,27 @@ public class Pawn extends Piece{
 		}
 		
 		
-		// Move to the next turn, change the current player to white or black. 
+		// IF IT DOES PUT US IN CHECK... WE NEED TO FIX ENPASSANT.
 		if(updated_board_message.message==null) {
-			if(Chess.current==Player.white && this.pieceRank==8) {
-				Chess.promotion(this);
+			if(Chess.checkChecker(updated_board_message, color)) {
+				this.pieceFile = originalFile;
+				this.pieceRank = originalRank;
+				
+				if(newSpot!=null) {
+					Chess.piecesOnBoard.add(newSpot);
+				}
 			}
-			else if(Chess.current==Player.black && this.pieceRank==1) {
-				Chess.promotion(this);
-			}
+			else {
+			
+				if(Chess.current==Player.white && this.pieceRank==8) {
+					Chess.promotion(this);
+				}
+				else if(Chess.current==Player.black && this.pieceRank==1) {
+					Chess.promotion(this);
+				}
+				
 			Chess.changePlayer();
+			}
 		}
 		
 		
@@ -232,7 +246,6 @@ public class Pawn extends Piece{
 			Piece.potentialMoves.add((x-1) + " " + (y-1));
 			Piece.potentialMoves.add((x+1) + " " + (y-1));
 		}
-		System.out.println(Piece.potentialMoves);
 
 	}
 	

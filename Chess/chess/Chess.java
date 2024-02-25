@@ -43,6 +43,9 @@ public class Chess {
 	
 	enum Player { white, black }
 	static ArrayList<ReturnPiece> piecesOnBoard = new ArrayList<>();
+	static ArrayList<ReturnPiece> testBoard = new ArrayList<>();
+	
+	
 	static Player current;
 	
 	static ReturnPiece enpassantPossible=null;
@@ -234,11 +237,54 @@ public class Chess {
 		piecesOnBoard.add(n);
 		pawnPromotion = 'Q';
 	}
-	public static boolean checkChecker() {
+	public static boolean checkChecker(ReturnPlay x, char color) {
+		Piece.potentialMoves.clear();
+		ReturnPiece k = null;
+		for(ReturnPiece p: x.piecesOnBoard) {
+			if (p instanceof Pawn && color!=p.pieceType.toString().charAt(0)) {
+				((Pawn) p).populateMoves();  
+				
+			}
+			else if (p instanceof Knight && color!=p.pieceType.toString().charAt(0)) {
+				((Knight) p).populateMoves();
+
+			} 
+			else if (p instanceof Bishop && color!=p.pieceType.toString().charAt(0)) {
+				((Bishop) p).populateMoves();
+
+			}
+			else if (p instanceof Rook && color!=p.pieceType.toString().charAt(0)) {
+				((Rook) p).populateMoves();
+			}
+			else if (p instanceof Queen && color!=p.pieceType.toString().charAt(0)) {
+				((Queen) p).populateMoves();
+			} 
+			else if (p instanceof King && color!=p.pieceType.toString().charAt(0)) {
+				((King) p).populateMoves();
+	
+			}
+			else if(p instanceof King && color==p.pieceType.toString().charAt(0)){
+				k = p;
+			}
+		}
+		String spotKingIsOn = (String.valueOf((int)k.pieceFile.toString().charAt(0))+ " " + k.pieceRank); 
+		if(Piece.potentialMoves.contains(spotKingIsOn)) {
+			//System.err.println("You're in CHECK");
+			System.out.println(spotKingIsOn);
+			// KING MUST MOVE TO SPOT WITHOUT CHECKMATE
+			
+			return true;
+		}
 		
 		
+		Piece.potentialMoves.clear();
+
 		return false;
 	}
+	public static void checkPotentialKingMoves() {
+		
+	}
+	
 	public static void changePlayer() {
 		if(current == Player.white){
 			current = Player.black;
@@ -249,49 +295,40 @@ public class Chess {
 	}
 	public static void start() {		
 		ReturnPiece bR1 = new Rook(ReturnPiece.PieceFile.a, 8, ReturnPiece.PieceType.BR);
-//		ReturnPiece bR2 = new Rook(ReturnPiece.PieceFile.h, 8, ReturnPiece.PieceType.BR);
-		ReturnPiece bR2 = new Rook(ReturnPiece.PieceFile.d, 5, ReturnPiece.PieceType.BR);
-		
+		ReturnPiece bR2 = new Rook(ReturnPiece.PieceFile.h, 8, ReturnPiece.PieceType.BR);		
 		ReturnPiece bN1 = new Knight(ReturnPiece.PieceFile.b, 8, ReturnPiece.PieceType.BN);
 		ReturnPiece bN2 = new Knight(ReturnPiece.PieceFile.g, 8, ReturnPiece.PieceType.BN);
-
 		ReturnPiece bB1 = new Bishop(ReturnPiece.PieceFile.c, 8, ReturnPiece.PieceType.BB);
 		ReturnPiece bB2 = new Bishop(ReturnPiece.PieceFile.f, 8, ReturnPiece.PieceType.BB);
-		
 		ReturnPiece bQ = new Queen(ReturnPiece.PieceFile.d, 8, ReturnPiece.PieceType.BQ); 
 		ReturnPiece bK = new King(ReturnPiece.PieceFile.e, 8, ReturnPiece.PieceType.BK);
 
-		ReturnPiece bP1= new Pawn(ReturnPiece.PieceFile.a, 3, ReturnPiece.PieceType.BP);
+		ReturnPiece bP1= new Pawn(ReturnPiece.PieceFile.a, 7, ReturnPiece.PieceType.BP);
 		ReturnPiece bP2= new Pawn(ReturnPiece.PieceFile.b, 7, ReturnPiece.PieceType.BP);
 		ReturnPiece bP3= new Pawn(ReturnPiece.PieceFile.c, 7, ReturnPiece.PieceType.BP);
-//		ReturnPiece bP4= new Pawn(ReturnPiece.PieceFile.e, 7, ReturnPiece.PieceType.BP);
-//		ReturnPiece bP4= new Pawn(ReturnPiece.PieceFile.e, 5, ReturnPiece.PieceType.BP);
-		ReturnPiece bP5= new Pawn(ReturnPiece.PieceFile.f, 7, ReturnPiece.PieceType.BP);
-		ReturnPiece bP6= new Pawn(ReturnPiece.PieceFile.g, 7, ReturnPiece.PieceType.BP);
-		ReturnPiece bP7= new Pawn(ReturnPiece.PieceFile.h, 7, ReturnPiece.PieceType.BP);
+		ReturnPiece bP4= new Pawn(ReturnPiece.PieceFile.d, 7, ReturnPiece.PieceType.BP);
+	//	ReturnPiece bP5= new Pawn(ReturnPiece.PieceFile.e, 7, ReturnPiece.PieceType.BP);
+		ReturnPiece bP6= new Pawn(ReturnPiece.PieceFile.f, 7, ReturnPiece.PieceType.BP);
+		ReturnPiece bP7= new Pawn(ReturnPiece.PieceFile.g, 7, ReturnPiece.PieceType.BP);
 		ReturnPiece bP8= new Pawn(ReturnPiece.PieceFile.h, 7, ReturnPiece.PieceType.BP);
 
 		ReturnPiece wP1= new Pawn(ReturnPiece.PieceFile.a, 2, ReturnPiece.PieceType.WP);
 		ReturnPiece wP2= new Pawn(ReturnPiece.PieceFile.b, 2, ReturnPiece.PieceType.WP);
 		ReturnPiece wP3= new Pawn(ReturnPiece.PieceFile.c, 2, ReturnPiece.PieceType.WP);
-		//ReturnPiece wP4= new Pawn(ReturnPiece.PieceFile.e, 2, ReturnPiece.PieceType.WP);
-		ReturnPiece wP5= new Pawn(ReturnPiece.PieceFile.f, 2, ReturnPiece.PieceType.WP);
-		ReturnPiece wP6= new Pawn(ReturnPiece.PieceFile.g, 2, ReturnPiece.PieceType.WP);
-		//ReturnPiece wP7= new Pawn(ReturnPiece.PieceFile.h, 2, ReturnPiece.PieceType.WP);
-		//ReturnPiece wP8= new Pawn(ReturnPiece.PieceFile.h, 2, ReturnPiece.PieceType.WP);
+		ReturnPiece wP4= new Pawn(ReturnPiece.PieceFile.d, 2, ReturnPiece.PieceType.WP);
+	//	ReturnPiece wP5= new Pawn(ReturnPiece.PieceFile.e, 2, ReturnPiece.PieceType.WP);
+		ReturnPiece wP6= new Pawn(ReturnPiece.PieceFile.f, 2, ReturnPiece.PieceType.WP);
+		ReturnPiece wP7= new Pawn(ReturnPiece.PieceFile.g, 2, ReturnPiece.PieceType.WP);
+		ReturnPiece wP8= new Pawn(ReturnPiece.PieceFile.h, 2, ReturnPiece.PieceType.WP);
 
 		ReturnPiece wR1= new Rook(ReturnPiece.PieceFile.a, 1, ReturnPiece.PieceType.WR);
 		ReturnPiece wR2= new Rook(ReturnPiece.PieceFile.h, 1, ReturnPiece.PieceType.WR);
-//		ReturnPiece wN1= new Knight(ReturnPiece.PieceFile.b, 1, ReturnPiece.PieceType.WN);
-		ReturnPiece wN1= new Knight(ReturnPiece.PieceFile.d, 4, ReturnPiece.PieceType.WN);
+		ReturnPiece wN1= new Knight(ReturnPiece.PieceFile.b, 1, ReturnPiece.PieceType.WN);
 		ReturnPiece wN2= new Knight(ReturnPiece.PieceFile.g, 1, ReturnPiece.PieceType.WN);
-//		ReturnPiece wB1= new Bishop(ReturnPiece.PieceFile.c, 1, ReturnPiece.PieceType.WB);
-		ReturnPiece wB1= new Bishop(ReturnPiece.PieceFile.d, 4, ReturnPiece.PieceType.WB);
+		ReturnPiece wB1= new Bishop(ReturnPiece.PieceFile.c, 1, ReturnPiece.PieceType.WB);
 		ReturnPiece wB2= new Bishop(ReturnPiece.PieceFile.f, 1, ReturnPiece.PieceType.WB);
-//		ReturnPiece wQ= new Queen(ReturnPiece.PieceFile.d, 1, ReturnPiece.PieceType.WQ);
-		ReturnPiece wQ= new Queen(ReturnPiece.PieceFile.e, 3, ReturnPiece.PieceType.WQ);
-//		ReturnPiece wK= new King(ReturnPiece.PieceFile.e, 1, ReturnPiece.PieceType.WK);
-		ReturnPiece wK= new King(ReturnPiece.PieceFile.b, 5, ReturnPiece.PieceType.WK);
+		ReturnPiece wQ= new Queen(ReturnPiece.PieceFile.d, 1, ReturnPiece.PieceType.WQ);
+		ReturnPiece wK= new King(ReturnPiece.PieceFile.e, 1, ReturnPiece.PieceType.WK);
 
 		Chess.piecesOnBoard.add(bN1);
 		Chess.piecesOnBoard.add(bN2);
@@ -313,25 +350,34 @@ public class Chess {
 		Chess.piecesOnBoard.add(wP1);
 		Chess.piecesOnBoard.add(wP2);
 		Chess.piecesOnBoard.add(wP3);
-		//Chess.piecesOnBoard.add(wP4);
-		Chess.piecesOnBoard.add(wP5);
+		Chess.piecesOnBoard.add(wP4);
+//		Chess.piecesOnBoard.add(wP5);
 		Chess.piecesOnBoard.add(wP6);
-	//	Chess.piecesOnBoard.add(wP7);
-		//Chess.piecesOnBoard.add(wP8);
+		Chess.piecesOnBoard.add(wP7);
+		Chess.piecesOnBoard.add(wP8);
 		
 		Chess.piecesOnBoard.add(bP1);
 		Chess.piecesOnBoard.add(bP2);
 		Chess.piecesOnBoard.add(bP3);
-	//	Chess.piecesOnBoard.add(bP4);
-		Chess.piecesOnBoard.add(bP5);
+		Chess.piecesOnBoard.add(bP4);
+//		Chess.piecesOnBoard.add(bP5);
 		Chess.piecesOnBoard.add(bP6);
 		Chess.piecesOnBoard.add(bP7);
-		//Chess.piecesOnBoard.add(bP8);
+		Chess.piecesOnBoard.add(bP8);
+		
+
 		
 		Chess.current = Player.white;
 		
 		PlayChess.printBoard(Chess.piecesOnBoard);
 		}
 
-
+	public static ArrayList<ReturnPiece> copyBoard() {
+		chess.ReturnPlay originalBoard = new ReturnPlay();
+		originalBoard.piecesOnBoard = new ArrayList<ReturnPiece>();
+		for(ReturnPiece p: piecesOnBoard) {
+			originalBoard.piecesOnBoard.add(new ReturnPiece());
+		}
+		return originalBoard.piecesOnBoard;
+	}
 }

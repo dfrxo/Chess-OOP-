@@ -2,6 +2,7 @@ package chess;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.ArrayList;
 
 import chess.Chess.Player;
 import chess.ReturnPlay.Message;
@@ -16,13 +17,16 @@ public class Queen extends Piece{
     
 	public ReturnPlay move(String file, int rank) {
 		// Queen
+		
+		
 		int newFileNumber = file.charAt(0);  // Used to put a numeric value on FILE 
 		// a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
 		// file and rank are the position of the potential new piece location
 		// so h2 to ---h4---
-		int currFileNumber = (int)this.pieceFile.toString().charAt(0);
-		populateMoves();
-
+		int currFileNumber = (int)this.pieceFile.toString().charAt(0); 
+		
+		PieceFile originalFile = this.pieceFile;
+		int originalRank = this.pieceRank;
 		
 		ReturnPiece newSpot = findNewSpot(file,rank);   // Finds the new spot
 		chess.ReturnPlay updated_board_message = new chess.ReturnPlay(); // New board to be updated
@@ -458,7 +462,21 @@ public class Queen extends Piece{
 		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 
 		if(updated_board_message.message==null) {
+			if(Chess.checkChecker(updated_board_message, color)) {
+				this.pieceFile = originalFile;
+				this.pieceRank = originalRank;
+				
+				if(newSpot!=null) {
+					Chess.piecesOnBoard.add(newSpot);
+				}
+				
+				updated_board_message.message = Message.ILLEGAL_MOVE;
+				System.err.println("This move would put you in check.");
+				
+			}
+			else {
 			Chess.changePlayer();
+			}
 		}
 		
 		return updated_board_message;
@@ -595,7 +613,6 @@ public class Queen extends Piece{
 			}
 			Piece.potentialMoves.add(temp + " " + y);
 		}
-		System.out.println(Piece.potentialMoves);
 
 	}
 	

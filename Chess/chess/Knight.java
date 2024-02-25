@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import chess.Chess.Player;
+import chess.ReturnPiece.PieceFile;
 import chess.ReturnPlay.Message;
 
 public class Knight extends Piece{
@@ -28,17 +29,21 @@ public class Knight extends Piece{
 
 	public ReturnPlay move(String file, int rank) {
 		// File and Rank are the location of the NEWSPOT. 
-		populateMoves();
 
 		int fileNumber = file.charAt(0);  // Used to put a numeric value on FILE 
 											// a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
 		ReturnPiece newSpot = findNewSpot(file,rank);   // Finds the new spot
+		chess.ReturnPlay originalBoard = new chess.ReturnPlay();
+		originalBoard.piecesOnBoard = Chess.piecesOnBoard;
 		chess.ReturnPlay updated_board_message = new chess.ReturnPlay();
 		String st = String.valueOf(this.pieceType); // CURRENT PIECE
 		char color = st.charAt(0); 					// Color of current piece
 		
 		int x;
 		int y;
+		
+		PieceFile originalFile = this.pieceFile;
+		int originalRank = this.pieceRank;
 		
 		x = file.charAt(0) - this.pieceFile.toString().charAt(0);
 		y = rank - this.pieceRank;
@@ -103,9 +108,15 @@ public class Knight extends Piece{
 				updated_board_message = eatThePiece(newSpot, fileNumber);
 			}
 		}
+
 		
 		if(updated_board_message.message==null) {
-			Chess.changePlayer();
+			if(Chess.checkChecker(updated_board_message, color)) {
+				
+			}
+			else {
+				Chess.changePlayer();
+			}
 		}
 		
 		
