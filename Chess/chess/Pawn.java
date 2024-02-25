@@ -143,7 +143,9 @@ public class Pawn extends Piece{
 				else if(Chess.current==Player.black && this.pieceRank==1) {
 					Chess.promotion(this);
 				}
-				
+				if(Chess.checkForCheck(updated_board_message, color)){ // CheckForCheck will check if the other king is now in check
+					updated_board_message.message = Message.CHECK;
+				}
 			Chess.changePlayer();
 			}
 		}

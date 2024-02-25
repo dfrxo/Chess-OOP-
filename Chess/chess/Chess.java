@@ -72,15 +72,17 @@ public class Chess {
 		ReturnPlay msg = new ReturnPlay();
 		move = move.trim();
 		
-		
-		
-		//////////////////////////////
-		//  DRAW AND RESIGN 
-		//////////////////////////////
-		
-		
-		
-		
+
+		if (move.equals("resign") && Chess.current == Player.black)
+		{
+			msg.message = ReturnPlay.Message.RESIGN_WHITE_WINS;
+			return msg;
+		}
+		else if (move.equals("resign") && Chess.current == Player.white)
+		{
+			msg.message = ReturnPlay.Message.RESIGN_BLACK_WINS;
+			return msg;
+		}
 		
 		try {
 			if(move.substring(0,2).equals(move.substring(3,5))) { // Checks if they did -- h2 h2 -- move to the same spot
@@ -93,9 +95,7 @@ public class Chess {
 			System.err.println("Wrong input");
 			return msg;
 		}
-		
-		
-		
+	
 		
 		String sf1 = String.valueOf(move.charAt(0));  // h
 		String sr1 = String.valueOf(move.charAt(1));  // 2
@@ -126,10 +126,17 @@ public class Chess {
 			}
 		}
 		
-		if(thePiece==null) {
+		char currentcolor = 0 ;
+		if(Chess.current == Chess.Player.black)
+			currentcolor = 'B';
+		else if(Chess.current == Chess.Player.white)
+			currentcolor = 'W';
+		
+		char piececolor = thePiece.pieceType.toString().charAt(0);
+		if(thePiece==null || currentcolor != piececolor) {
 			msg.piecesOnBoard = Chess.piecesOnBoard;
 			msg.message = ReturnPlay.Message.ILLEGAL_MOVE;
-			System.err.println("You chose an empty spot as a piece to move.");
+			System.err.println("no piece here or wrong color piece");
 			return msg;
 		}
 		
@@ -166,37 +173,12 @@ public class Chess {
 			msg = ((King) thePiece).move(sf2, finalRank);
 
 		}
-//		else {
-		// Code to execute if thePiece does not match any of the above
-//		}
-//		else {  // THIS ELSE STATEMENT IS FOR TESTING THE EAT THE PIECE MOVE
-//				////////////////////////////////////////////////////////////
-//				////////////////////////////////////////////////////////////
-//			boolean emptySpace = true;        
-//			for (int i = 0; i < Chess.piecesOnBoard.size(); i++)
-//			{
-//				ReturnPiece pc = piecesOnBoard.get(i);
-//				if (pc.pieceFile.toString().equals(sf2) && pc.pieceRank == finalRank)
-//				{
-//					emptySpace=false;
-//					newSpot = pc;
-//					break; 
-//				}
-//			}
-//			
-//			
-//			if(emptySpace) {
-//				thePiece.pieceRank = finalRank;
-//				thePiece.pieceFile = finalFile;
-//			}
-//			msg.piecesOnBoard = Chess.piecesOnBoard;
-//		}
-
-			/////////////////////////////////////////////////////////////////////
-		////////////////TESTING ONLY. REMOVE LATER//////////////////////////////
-		/////////////////////////////////////////////////////////////////////////
 		
-	
+		if (move.length() > 5 && move.substring(6).equals("draw?") && msg.message == null)
+		{
+			msg.message = ReturnPlay.Message.DRAW;
+			return msg;
+		}
 		
 		return msg;
 	}
@@ -226,7 +208,7 @@ public class Chess {
 				 n = new Rook(p.pieceFile, p.pieceRank, ReturnPiece.PieceType.BR);
 			}			break;
 		default:
-			if(p.pieceType.toString().charAt(0)=='Q') {
+			if(p.pieceType.toString().charAt(0)=='W') {
 				 n = new Queen(p.pieceFile, p.pieceRank, ReturnPiece.PieceType.WQ);
 			}
 			else {
@@ -237,6 +219,7 @@ public class Chess {
 		piecesOnBoard.add(n);
 		pawnPromotion = 'Q';
 	}
+	// Checks if it puts your own king in check
 	public static boolean checkChecker(ReturnPlay x, char color) {
 		Piece.potentialMoves.clear();
 		ReturnPiece k = null;
@@ -270,7 +253,6 @@ public class Chess {
 		String spotKingIsOn = (String.valueOf((int)k.pieceFile.toString().charAt(0))+ " " + k.pieceRank); 
 		if(Piece.potentialMoves.contains(spotKingIsOn)) {
 			//System.err.println("You're in CHECK");
-			System.out.println(spotKingIsOn);
 			// KING MUST MOVE TO SPOT WITHOUT CHECKMATE
 			
 			return true;
@@ -279,6 +261,46 @@ public class Chess {
 		
 		Piece.potentialMoves.clear();
 
+		return false;
+	}
+	// Checks if it puts the other king in check
+	public static boolean checkForCheck(ReturnPlay x, char color) {
+		Piece.potentialMoves.clear();
+		ReturnPiece k = null;
+		for(ReturnPiece p: x.piecesOnBoard) {
+			if (p instanceof Pawn && color==p.pieceType.toString().charAt(0)) {
+				((Pawn) p).populateMoves();  
+				
+			}
+			else if (p instanceof Knight && color==p.pieceType.toString().charAt(0)) {
+				((Knight) p).populateMoves();
+
+			} 
+			else if (p instanceof Bishop && color==p.pieceType.toString().charAt(0)) {
+				((Bishop) p).populateMoves();
+
+			}
+			else if (p instanceof Rook && color==p.pieceType.toString().charAt(0)) {
+				((Rook) p).populateMoves();
+			}
+			else if (p instanceof Queen && color==p.pieceType.toString().charAt(0)) {
+				((Queen) p).populateMoves();
+			} 
+			else if (p instanceof King && color==p.pieceType.toString().charAt(0)) {
+				((King) p).populateMoves();
+	
+			}
+			else if(p instanceof King && color!=p.pieceType.toString().charAt(0)){
+				k = p;
+			}
+		}
+		String spotKingIsOn = (String.valueOf((int)k.pieceFile.toString().charAt(0))+ " " + k.pieceRank); 
+		if(Piece.potentialMoves.contains(spotKingIsOn)) {
+			//System.err.println("You're in CHECK");
+			// KING MUST MOVE TO SPOT WITHOUT CHECKMATE
+			
+			return true;
+		}
 		return false;
 	}
 	public static void checkPotentialKingMoves() {
@@ -317,9 +339,10 @@ public class Chess {
 		ReturnPiece wP3= new Pawn(ReturnPiece.PieceFile.c, 2, ReturnPiece.PieceType.WP);
 		ReturnPiece wP4= new Pawn(ReturnPiece.PieceFile.d, 2, ReturnPiece.PieceType.WP);
 	//	ReturnPiece wP5= new Pawn(ReturnPiece.PieceFile.e, 2, ReturnPiece.PieceType.WP);
-		ReturnPiece wP6= new Pawn(ReturnPiece.PieceFile.f, 2, ReturnPiece.PieceType.WP);
+	//	ReturnPiece wP6= new Pawn(ReturnPiece.PieceFile.f, 2, ReturnPiece.PieceType.WP);
+		ReturnPiece wP6= new Pawn(ReturnPiece.PieceFile.f, 6, ReturnPiece.PieceType.WP);
 		ReturnPiece wP7= new Pawn(ReturnPiece.PieceFile.g, 2, ReturnPiece.PieceType.WP);
-		ReturnPiece wP8= new Pawn(ReturnPiece.PieceFile.h, 2, ReturnPiece.PieceType.WP);
+	//	ReturnPiece wP8= new Pawn(ReturnPiece.PieceFile.h, 2, ReturnPiece.PieceType.WP);
 
 		ReturnPiece wR1= new Rook(ReturnPiece.PieceFile.a, 1, ReturnPiece.PieceType.WR);
 		ReturnPiece wR2= new Rook(ReturnPiece.PieceFile.h, 1, ReturnPiece.PieceType.WR);
@@ -333,7 +356,7 @@ public class Chess {
 		Chess.piecesOnBoard.add(bN1);
 		Chess.piecesOnBoard.add(bN2);
 		Chess.piecesOnBoard.add(bB1);
-		Chess.piecesOnBoard.add(bB2);
+//		Chess.piecesOnBoard.add(bB2);
 		Chess.piecesOnBoard.add(bQ);
 		Chess.piecesOnBoard.add(bK);
 		Chess.piecesOnBoard.add(bR1);
@@ -354,14 +377,14 @@ public class Chess {
 //		Chess.piecesOnBoard.add(wP5);
 		Chess.piecesOnBoard.add(wP6);
 		Chess.piecesOnBoard.add(wP7);
-		Chess.piecesOnBoard.add(wP8);
+//		Chess.piecesOnBoard.add(wP8);
 		
 		Chess.piecesOnBoard.add(bP1);
 		Chess.piecesOnBoard.add(bP2);
 		Chess.piecesOnBoard.add(bP3);
 		Chess.piecesOnBoard.add(bP4);
 //		Chess.piecesOnBoard.add(bP5);
-		Chess.piecesOnBoard.add(bP6);
+//		Chess.piecesOnBoard.add(bP6);
 		Chess.piecesOnBoard.add(bP7);
 		Chess.piecesOnBoard.add(bP8);
 		

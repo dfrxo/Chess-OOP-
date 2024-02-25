@@ -249,9 +249,7 @@ public class Queen extends Piece{
 				if(color == 'B') {
 					if((currFileNumber == newFileNumber)) {  // if 'h' == 'h' (104==104)
 						
-						// Check each spot till you reach the new spot
-						System.out.println("upwards test");
-						
+						// Check each spot till you reach the new spot						
 						if(rank>this.pieceRank) {
 							if(!straightLineCheck(newFileNumber,rank,"up")) {
 								System.err.println("Blocked by another piece");
@@ -462,8 +460,8 @@ public class Queen extends Piece{
 		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 
 		if(updated_board_message.message==null) {
-			if(Chess.checkChecker(updated_board_message, color)) {
-				this.pieceFile = originalFile;
+			if(Chess.checkChecker(updated_board_message, color)) { // checkChecker checks if your own king
+				this.pieceFile = originalFile;							// will be put in check
 				this.pieceRank = originalRank;
 				
 				if(newSpot!=null) {
@@ -473,6 +471,10 @@ public class Queen extends Piece{
 				updated_board_message.message = Message.ILLEGAL_MOVE;
 				System.err.println("This move would put you in check.");
 				
+			}
+			else if(Chess.checkForCheck(updated_board_message, color)){ // CheckForCheck will check if the other
+				updated_board_message.message = Message.CHECK;
+				Chess.changePlayer();
 			}
 			else {
 			Chess.changePlayer();

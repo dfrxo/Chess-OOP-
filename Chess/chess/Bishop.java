@@ -256,6 +256,10 @@ public class Bishop extends Piece{
 				System.err.println("This move would put you in check.");
 				
 			}
+			else if(Chess.checkForCheck(updated_board_message, color)){ // CheckForCheck will check if the other
+				updated_board_message.message = Message.CHECK;
+				Chess.changePlayer();
+			}
 			else {
 			Chess.changePlayer();
 			}
@@ -355,11 +359,6 @@ public class Bishop extends Piece{
 			Piece.potentialMoves.add(temp + " " + tempy);
 			tempy--;
 		}
-		
-		
-		System.out.println(Piece.potentialMoves);
-		
-		
 	}
 
 }

@@ -314,7 +314,7 @@ public class Rook extends Piece{
 		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 
 		// NEED TO FIX CASTLING IF THIS ACTIVATES
-		if(Chess.checkChecker(updated_board_message, color)) {
+		if(Chess.checkChecker(updated_board_message, color)) { // Reverts move if puts our own king in check
 			this.pieceFile = originalFile;
 			this.pieceRank = originalRank;
 			
@@ -322,6 +322,14 @@ public class Rook extends Piece{
 				Chess.piecesOnBoard.add(newSpot);
 			}
 		}
+		else if(Chess.checkForCheck(updated_board_message, color)){ // CheckForCheck will check if the other
+			updated_board_message.message = Message.CHECK;
+			Chess.changePlayer();
+		}
+		else {
+			Chess.changePlayer();
+		}
+		
 		return updated_board_message;
 		
 	}

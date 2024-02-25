@@ -112,7 +112,19 @@ public class Knight extends Piece{
 		
 		if(updated_board_message.message==null) {
 			if(Chess.checkChecker(updated_board_message, color)) {
+				this.pieceFile = originalFile;							// will be put in check
+				this.pieceRank = originalRank;
 				
+				if(newSpot!=null) {
+					Chess.piecesOnBoard.add(newSpot);
+				}
+				
+				updated_board_message.message = Message.ILLEGAL_MOVE;
+				System.err.println("This move would put you in check.");
+			}
+			else if(Chess.checkForCheck(updated_board_message, color)){ // CheckForCheck will check if the other
+				updated_board_message.message = Message.CHECK;
+				Chess.changePlayer();
 			}
 			else {
 				Chess.changePlayer();
@@ -193,7 +205,6 @@ public class Knight extends Piece{
 			}
 			Piece.potentialMoves.add(tempx + " " + tempy);
 		}
-		System.out.println(Piece.potentialMoves);
 	}
 
 }
