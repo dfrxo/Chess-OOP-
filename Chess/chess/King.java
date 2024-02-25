@@ -4,7 +4,12 @@ import chess.Chess.Player;
 import chess.ReturnPlay.Message;
 
 public class King extends Piece{
-
+    public King(PieceFile pieceFile, int pieceRank, PieceType pieceType) {
+        this.pieceFile = pieceFile;
+        this.pieceRank = pieceRank;
+        this.pieceType = pieceType;
+    }
+    
 	public ReturnPlay move(String file, int rank) {
 		int newFileNumber = file.charAt(0);  // Used to put a numeric value on FILE 
 		// a:97 b:98 c:99 d:100 e:101 f:102 g:103 h:104
@@ -30,11 +35,15 @@ public class King extends Piece{
 					if(fileMovement<2 && rankMovement <2) {
 						this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
 						this.pieceRank = rank;	
+						Chess.whiteLeftCastle = false;
+						Chess.whiteRightCastle = false;
 					}
 					else if(originalMove.equals("e1 g1") || originalMove.equals("e1 c1")) { // Castling 
 						// e1 g1 rook goes h1 f1
 						// e1 c1 rook goes a1 d1
 						updated_board_message = castle(originalMove);
+						Chess.whiteLeftCastle = false;
+						Chess.whiteRightCastle = false;
 					}
 					else {
 						System.err.println("Moved too far.");
@@ -54,6 +63,8 @@ public class King extends Piece{
 				if(color == 'W') {
 					if(fileMovement<2 && rankMovement <2) {
 						updated_board_message = eatThePiece(newSpot,newFileNumber);
+						Chess.whiteLeftCastle = false;
+						Chess.whiteRightCastle = false;
 					}
 					else {
 						System.err.println("Moved too far.");
@@ -73,10 +84,14 @@ public class King extends Piece{
 					if(fileMovement<2 && rankMovement <2) {
 						this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
 						this.pieceRank = rank;	
+						Chess.blackLeftCastle = false;
+						Chess.blackRightCastle = false;
 					}
 					else if(originalMove.equals("e8 g8") || originalMove.equals("e8 c8")) { // Castling 
 						
 						updated_board_message = castle(originalMove);
+						Chess.blackLeftCastle = false;
+						Chess.blackRightCastle = false;
 					}
 					else {
 						System.err.println("Moved too far.");
@@ -96,6 +111,8 @@ public class King extends Piece{
 				if(color == 'B') {
 					if(fileMovement<2 && rankMovement <2) {
 						updated_board_message = eatThePiece(newSpot,newFileNumber);
+						Chess.blackLeftCastle = false;
+						Chess.blackRightCastle = false;
 					}
 					else {
 						System.err.println("Moved too far.");
@@ -164,7 +181,7 @@ public class King extends Piece{
 		switch(move) {
 		case "e1 g1":			
 			// if(king or rook has moved): invalid move
-			if(straightLineCheck(104,1,"right")) {  // 
+			if(straightLineCheck(104,1,"right") && Chess.whiteRightCastle) {  // 
 				rook = findNewSpot("h",1);
 				
 				this.pieceFile = chess.ReturnPiece.PieceFile.valueOf("g");
@@ -176,7 +193,7 @@ public class King extends Piece{
 			}
 			break;
 		case "e1 c1":
-			if(straightLineCheck(97,1,"left")) {  // 
+			if(straightLineCheck(97,1,"left") && Chess.whiteLeftCastle) {  // 
 				rook = findNewSpot("a",1);
 				
 				this.pieceFile = chess.ReturnPiece.PieceFile.valueOf("c");
@@ -188,7 +205,7 @@ public class King extends Piece{
 			}
 			break;
 		case "e8 g8":
-			if(straightLineCheck(104,8,"right")) {  // 
+			if(straightLineCheck(104,8,"right") && Chess.blackRightCastle) {  // 
 				rook = findNewSpot("h",8);
 				
 				this.pieceFile = chess.ReturnPiece.PieceFile.valueOf("g");
@@ -201,7 +218,7 @@ public class King extends Piece{
 			break;
 			
 		case "e8 c8":
-			if(straightLineCheck(97,8,"left")) {  // 
+			if(straightLineCheck(97,8,"left") && Chess.blackLeftCastle) {  // 
 				rook = findNewSpot("a",8);
 				
 				this.pieceFile = chess.ReturnPiece.PieceFile.valueOf("c");

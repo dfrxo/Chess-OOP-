@@ -7,11 +7,6 @@ import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
 import chess.ReturnPlay.Message;
 
-
-
-
-//NEED TO FIX 2 PIECE JUMP OVER A PIECE 
-
 public class Pawn extends Piece{
 	// Inherited fields :: 
 //	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
@@ -21,7 +16,11 @@ public class Pawn extends Piece{
 //	PieceFile pieceFile;
 //	int pieceRank;  // 1..8
 //  ArrayList<ReturnPiece> board = (ArrayList<ReturnPiece>)Chess.piecesOnBoard.clone();
-
+	public Pawn(PieceFile pieceFile, int pieceRank, PieceType pieceType) {
+		this.pieceFile = pieceFile;
+		this.pieceRank = pieceRank;
+		this.pieceType = pieceType;
+	}
 	public boolean checkCheck() {
 		return false;
 	}
@@ -52,7 +51,8 @@ public class Pawn extends Piece{
 		if(Chess.current == Player.white) { // White piece.   // Chess.current is the current player's turn
 			if(newSpot==null) {
 				// it's an empty spot
-				if(color=='W' && pieceRank==2  && rank-this.pieceRank==2 && this.pieceFile.toString().equals(file)) { 
+				if(color=='W' && pieceRank==2  && rank-this.pieceRank==2 && 
+						this.pieceFile.toString().equals(file) && straightLineCheck((int)file.charAt(0),rank,"up")) { 									
 					this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
 					this.pieceRank = rank;
 					updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
@@ -91,7 +91,8 @@ public class Pawn extends Piece{
 		else {  // Black piece
 			if(newSpot==null) {
 				// it's an empty spot
-				if(color=='B' && pieceRank==7  && this.pieceRank-rank==2 && this.pieceFile.toString().equals(file)) { 
+				if(color=='B' && pieceRank==7  && this.pieceRank-rank==2 && this.pieceFile.toString().equals(file)
+						&& straightLineCheck((int)file.charAt(0),rank,"down")) { 
 					this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(file);
 					this.pieceRank = rank;
 					Chess.enpassantPossible = this;
@@ -125,8 +126,22 @@ public class Pawn extends Piece{
 		
 		// Move to the next turn, change the current player to white or black. 
 		if(updated_board_message.message==null) {
+			if(Chess.current==Player.white && this.pieceRank==8) {
+				Chess.promotion(this);
+			}
+			else if(Chess.current==Player.black && this.pieceRank==1) {
+				Chess.promotion(this);
+			}
 			Chess.changePlayer();
 		}
+		
+		
+		
+		////////////////////////////////
+		/// Check for check/////////////
+		////////////////////////////////
+		
+		
 		return updated_board_message;
 	}
 	public ReturnPiece findNewSpot(String sf2, int pieceRank) {
@@ -168,6 +183,7 @@ public class Pawn extends Piece{
 			Chess.piecesOnBoard.remove(newSpot);
 			this.pieceRank = newRank;
 			this.pieceFile = chess.ReturnPiece.PieceFile.valueOf(stt);
+
 		}
 		else {
 			updated_board_message.message = Message.ILLEGAL_MOVE;

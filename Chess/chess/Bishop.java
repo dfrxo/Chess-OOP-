@@ -5,6 +5,12 @@ import chess.ReturnPlay.Message;
 
 public class Bishop extends Piece{
 
+    public Bishop(PieceFile pieceFile, int pieceRank, PieceType pieceType) {
+        this.pieceFile = pieceFile;
+        this.pieceRank = pieceRank;
+        this.pieceType = pieceType;
+    }
+    
 	ReturnPlay move(String file, int rank) {
 		// TODO Auto-generated method stub
 		int newFileNumber = file.charAt(0);

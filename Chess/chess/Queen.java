@@ -8,6 +8,12 @@ import chess.ReturnPlay.Message;
 
 public class Queen extends Piece{
 	
+    public Queen(PieceFile pieceFile, int pieceRank, PieceType pieceType) {
+        this.pieceFile = pieceFile;
+        this.pieceRank = pieceRank;
+        this.pieceType = pieceType;
+    }
+    
 	public ReturnPlay move(String file, int rank) {
 		// Queen
 		int newFileNumber = file.charAt(0);  // Used to put a numeric value on FILE 

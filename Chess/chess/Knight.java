@@ -13,6 +13,11 @@ public class Knight extends Piece{
 //	PieceType pieceType;
 //	PieceFile pieceFile;
 //	int pieceRank;  // 1..8
+    public Knight(PieceFile pieceFile, int pieceRank, PieceType pieceType) {
+        this.pieceFile = pieceFile;
+        this.pieceRank = pieceRank;
+        this.pieceType = pieceType;
+    }
 	public boolean checkCheck() {
 		// TODO Auto-generated method stub
 		return false;
