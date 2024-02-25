@@ -473,6 +473,11 @@ public class Queen extends Piece{
 				
 			}
 			else if(Chess.checkForCheck(updated_board_message, color)){ // CheckForCheck will check if the other
+				
+				if(true) {      // Check for checkmate
+					
+				}
+				
 				updated_board_message.message = Message.CHECK;
 				Chess.changePlayer();
 			}

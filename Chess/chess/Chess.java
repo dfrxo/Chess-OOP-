@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
 
 class ReturnPiece {
@@ -54,6 +55,7 @@ public class Chess {
 	static boolean blackRightCastle=true;
 	static boolean whiteRightCastle=true;
 	static char pawnPromotion='Q';
+	static boolean checkmate = false;
 
 	
 	/**
@@ -296,11 +298,20 @@ public class Chess {
 		}
 		String spotKingIsOn = (String.valueOf((int)k.pieceFile.toString().charAt(0))+ " " + k.pieceRank); 
 		if(Piece.potentialMoves.contains(spotKingIsOn)) {
-			//System.err.println("You're in CHECK");
-			// KING MUST MOVE TO SPOT WITHOUT CHECKMATE
+			
+			
+			checkmatee(x, color);
 			
 			return true;
 		}
+		return false;
+	}
+	public static boolean checkmatee(ReturnPlay x, char color) {
+		// Find all directions to find piece putting it in check.
+		
+		
+		
+		
 		return false;
 	}
 	public static void checkPotentialKingMoves() {
@@ -320,7 +331,8 @@ public class Chess {
 		ReturnPiece bR2 = new Rook(ReturnPiece.PieceFile.h, 8, ReturnPiece.PieceType.BR);		
 		ReturnPiece bN1 = new Knight(ReturnPiece.PieceFile.b, 8, ReturnPiece.PieceType.BN);
 		ReturnPiece bN2 = new Knight(ReturnPiece.PieceFile.g, 8, ReturnPiece.PieceType.BN);
-		ReturnPiece bB1 = new Bishop(ReturnPiece.PieceFile.c, 8, ReturnPiece.PieceType.BB);
+		ReturnPiece bB1 = new Bishop(ReturnPiece.PieceFile.b, 6, ReturnPiece.PieceType.BB);
+//		ReturnPiece bB1 = new Bishop(ReturnPiece.PieceFile.c, 8, ReturnPiece.PieceType.BB);
 		ReturnPiece bB2 = new Bishop(ReturnPiece.PieceFile.f, 8, ReturnPiece.PieceType.BB);
 		ReturnPiece bQ = new Queen(ReturnPiece.PieceFile.d, 8, ReturnPiece.PieceType.BQ); 
 		ReturnPiece bK = new King(ReturnPiece.PieceFile.e, 8, ReturnPiece.PieceType.BK);

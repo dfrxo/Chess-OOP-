@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.HashSet;
+
 import chess.Chess.Player;
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPlay.Message;
@@ -138,25 +140,22 @@ public class King extends Piece{
 		}
 		updated_board_message.piecesOnBoard = Chess.piecesOnBoard;
 		
-//		if(updated_board_message.message==null) {
-//			if(Chess.checkChecker(updated_board_message, color)) {
-//				this.pieceFile = originalFile;
-//				this.pieceRank = originalRank;
-//				
-//				if(newSpot!=null) {
-//					Chess.piecesOnBoard.add(newSpot);
-//				}
-//				
-//				updated_board_message.message = Message.ILLEGAL_MOVE;
-//				System.err.println("This move would put you in check.");
-//				
-//			}
-//			else {
-//			Chess.changePlayer();
-//			}
-//		}
 		if(updated_board_message.message==null) {
+			if(Chess.checkChecker(updated_board_message, color)) {
+				this.pieceFile = originalFile;
+				this.pieceRank = originalRank;
+				
+				if(newSpot!=null) {
+					Chess.piecesOnBoard.add(newSpot);
+				}
+				
+				updated_board_message.message = Message.ILLEGAL_MOVE;
+				System.err.println("This move would put you in check.");
+				
+			}
+			else {
 			Chess.changePlayer();
+			}
 		}
 		
 		return updated_board_message;
@@ -288,8 +287,9 @@ public class King extends Piece{
 	//		}
 		}
 	}
-	void populateMovesCheckMate() {
+	public HashSet<String> populateMovesCheckMate() {
 //		if(0==0) {
+		 	HashSet<String> kingSpots = new HashSet<>();
 			String st = this.pieceFile.toString();
 			int x = st.charAt(0);
 			int y = pieceRank;
@@ -301,14 +301,15 @@ public class King extends Piece{
 					newSpot = findNewSpot(String.valueOf((char)(tempx)),tempy);
 					if(newSpot!=null && tempy!=y && tempx !=x) {
 						if(newSpot.pieceType.toString().charAt(0)!=this.pieceType.toString().charAt(0)) {
-							Piece.potentialMoves.add((tempx + " " + tempy).trim());
+							kingSpots.add((tempx + " " + tempy).trim());
 						}
 						break;
 					}
-					Piece.potentialMoves.add((tempx + " " + tempy).trim());
+					kingSpots.add((tempx + " " + tempy).trim());
 				}
 	//		}
 		}
+			return kingSpots;
 
 	}
 }
