@@ -78,11 +78,13 @@ public class Chess {
 		if (move.equals("resign") && Chess.current == Player.black)
 		{
 			msg.message = ReturnPlay.Message.RESIGN_WHITE_WINS;
+			msg.piecesOnBoard = Chess.piecesOnBoard;
 			return msg;
 		}
 		else if (move.equals("resign") && Chess.current == Player.white)
 		{
 			msg.message = ReturnPlay.Message.RESIGN_BLACK_WINS;
+			msg.piecesOnBoard = Chess.piecesOnBoard;
 			return msg;
 		}
 		
@@ -128,17 +130,24 @@ public class Chess {
 			}
 		}
 		
-		char currentcolor = 0 ;
-		if(Chess.current == Chess.Player.black)
-			currentcolor = 'B';
-		else if(Chess.current == Chess.Player.white)
-			currentcolor = 'W';
+//		char currentcolor = 0 ;
+//		if(Chess.current == Chess.Player.black)
+//			currentcolor = 'B';
+//		else if(Chess.current == Chess.Player.white)
+//			currentcolor = 'W';
+//		
+//		char piececolor = thePiece.pieceType.toString().charAt(0);
+//		if(thePiece==null || currentcolor != piececolor) {
+//			msg.piecesOnBoard = Chess.piecesOnBoard;
+//			msg.message = ReturnPlay.Message.ILLEGAL_MOVE;
+//			System.err.println("no piece here or wrong color piece");
+//			return msg;
+//		}
 		
-		char piececolor = thePiece.pieceType.toString().charAt(0);
-		if(thePiece==null || currentcolor != piececolor) {
+		if(thePiece==null) {
 			msg.piecesOnBoard = Chess.piecesOnBoard;
 			msg.message = ReturnPlay.Message.ILLEGAL_MOVE;
-			System.err.println("no piece here or wrong color piece");
+			System.err.println("You chose an empty spot as a piece to move.");
 			return msg;
 		}
 		
@@ -331,8 +340,7 @@ public class Chess {
 		ReturnPiece bR2 = new Rook(ReturnPiece.PieceFile.h, 8, ReturnPiece.PieceType.BR);		
 		ReturnPiece bN1 = new Knight(ReturnPiece.PieceFile.b, 8, ReturnPiece.PieceType.BN);
 		ReturnPiece bN2 = new Knight(ReturnPiece.PieceFile.g, 8, ReturnPiece.PieceType.BN);
-		ReturnPiece bB1 = new Bishop(ReturnPiece.PieceFile.b, 6, ReturnPiece.PieceType.BB);
-//		ReturnPiece bB1 = new Bishop(ReturnPiece.PieceFile.c, 8, ReturnPiece.PieceType.BB);
+		ReturnPiece bB1 = new Bishop(ReturnPiece.PieceFile.c, 8, ReturnPiece.PieceType.BB);
 		ReturnPiece bB2 = new Bishop(ReturnPiece.PieceFile.f, 8, ReturnPiece.PieceType.BB);
 		ReturnPiece bQ = new Queen(ReturnPiece.PieceFile.d, 8, ReturnPiece.PieceType.BQ); 
 		ReturnPiece bK = new King(ReturnPiece.PieceFile.e, 8, ReturnPiece.PieceType.BK);
@@ -341,7 +349,7 @@ public class Chess {
 		ReturnPiece bP2= new Pawn(ReturnPiece.PieceFile.b, 7, ReturnPiece.PieceType.BP);
 		ReturnPiece bP3= new Pawn(ReturnPiece.PieceFile.c, 7, ReturnPiece.PieceType.BP);
 		ReturnPiece bP4= new Pawn(ReturnPiece.PieceFile.d, 7, ReturnPiece.PieceType.BP);
-	//	ReturnPiece bP5= new Pawn(ReturnPiece.PieceFile.e, 7, ReturnPiece.PieceType.BP);
+		ReturnPiece bP5= new Pawn(ReturnPiece.PieceFile.e, 7, ReturnPiece.PieceType.BP);
 		ReturnPiece bP6= new Pawn(ReturnPiece.PieceFile.f, 7, ReturnPiece.PieceType.BP);
 		ReturnPiece bP7= new Pawn(ReturnPiece.PieceFile.g, 7, ReturnPiece.PieceType.BP);
 		ReturnPiece bP8= new Pawn(ReturnPiece.PieceFile.h, 7, ReturnPiece.PieceType.BP);
@@ -350,11 +358,10 @@ public class Chess {
 		ReturnPiece wP2= new Pawn(ReturnPiece.PieceFile.b, 2, ReturnPiece.PieceType.WP);
 		ReturnPiece wP3= new Pawn(ReturnPiece.PieceFile.c, 2, ReturnPiece.PieceType.WP);
 		ReturnPiece wP4= new Pawn(ReturnPiece.PieceFile.d, 2, ReturnPiece.PieceType.WP);
-	//	ReturnPiece wP5= new Pawn(ReturnPiece.PieceFile.e, 2, ReturnPiece.PieceType.WP);
-	//	ReturnPiece wP6= new Pawn(ReturnPiece.PieceFile.f, 2, ReturnPiece.PieceType.WP);
-		ReturnPiece wP6= new Pawn(ReturnPiece.PieceFile.f, 6, ReturnPiece.PieceType.WP);
+		ReturnPiece wP5= new Pawn(ReturnPiece.PieceFile.e, 2, ReturnPiece.PieceType.WP);
+		ReturnPiece wP6= new Pawn(ReturnPiece.PieceFile.f, 2, ReturnPiece.PieceType.WP);
 		ReturnPiece wP7= new Pawn(ReturnPiece.PieceFile.g, 2, ReturnPiece.PieceType.WP);
-	//	ReturnPiece wP8= new Pawn(ReturnPiece.PieceFile.h, 2, ReturnPiece.PieceType.WP);
+		ReturnPiece wP8= new Pawn(ReturnPiece.PieceFile.h, 2, ReturnPiece.PieceType.WP);
 
 		ReturnPiece wR1= new Rook(ReturnPiece.PieceFile.a, 1, ReturnPiece.PieceType.WR);
 		ReturnPiece wR2= new Rook(ReturnPiece.PieceFile.h, 1, ReturnPiece.PieceType.WR);
@@ -368,7 +375,7 @@ public class Chess {
 		Chess.piecesOnBoard.add(bN1);
 		Chess.piecesOnBoard.add(bN2);
 		Chess.piecesOnBoard.add(bB1);
-//		Chess.piecesOnBoard.add(bB2);
+		Chess.piecesOnBoard.add(bB2);
 		Chess.piecesOnBoard.add(bQ);
 		Chess.piecesOnBoard.add(bK);
 		Chess.piecesOnBoard.add(bR1);
@@ -386,17 +393,17 @@ public class Chess {
 		Chess.piecesOnBoard.add(wP2);
 		Chess.piecesOnBoard.add(wP3);
 		Chess.piecesOnBoard.add(wP4);
-//		Chess.piecesOnBoard.add(wP5);
+		Chess.piecesOnBoard.add(wP5);
 		Chess.piecesOnBoard.add(wP6);
 		Chess.piecesOnBoard.add(wP7);
-//		Chess.piecesOnBoard.add(wP8);
+		Chess.piecesOnBoard.add(wP8);
 		
 		Chess.piecesOnBoard.add(bP1);
 		Chess.piecesOnBoard.add(bP2);
 		Chess.piecesOnBoard.add(bP3);
 		Chess.piecesOnBoard.add(bP4);
-//		Chess.piecesOnBoard.add(bP5);
-//		Chess.piecesOnBoard.add(bP6);
+		Chess.piecesOnBoard.add(bP5);
+		Chess.piecesOnBoard.add(bP6);
 		Chess.piecesOnBoard.add(bP7);
 		Chess.piecesOnBoard.add(bP8);
 		
@@ -404,7 +411,6 @@ public class Chess {
 		
 		Chess.current = Player.white;
 		
-		PlayChess.printBoard(Chess.piecesOnBoard);
 		}
 
 	public static ArrayList<ReturnPiece> copyBoard() {
